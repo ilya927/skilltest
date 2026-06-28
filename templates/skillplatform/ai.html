@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/ai.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="ai-wrapper">
+
+    <div class="ai-header">
+        Learning AI Assistant
+    </div>
+
+    <!-- lesson / test buttons -->
+    <div class="quick-questions">
+        <button onclick="quickAsk('Create a math test')">Math Test</button>
+        <button onclick="quickAsk('Explain fractions')">Fractions</button>
+        <button onclick="quickAsk('Create an English test')">English Test</button>
+        <button onclick="quickAsk('Explain geometry')">Geometry</button>
+        <button onclick="quickAsk('Give me a science quiz')">Science Quiz</button>
+    </div>
+
+    <div id="chatBox" class="chat-box"></div>
+
+    <div class="input-area">
+        <input id="messageInput" type="text" placeholder="Write a lesson topic..." />
+        <button id="sendBtn">Send</button>
+    </div>
+
+</div>
+
+<script>
+const chatBox = document.getElementById("chatBox");
+const input = document.getElementById("messageInput");
+const sendBtn = document.getElementById("sendBtn");
+
+/* =========================
+   ADD MESSAGE
+========================= */
+function addMessage(text, type) {
+    const div = document.createElement("div");
+    div.classList.add("message", type);
+    div.innerText = text;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+/* =========================
+   SEND MESSAGE
+========================= */
+async function sendMessage(textFromButton = null) {
+    const message = textFromButton || input.value.trim();
+    if (!message) return;
+
+    addMessage(message, "user");
+    input.value = "";
+
+    const res = await fetch("/ai/chat/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+    });
+
+    const data = await res.json();
+
+    addMessage(data.response || "Error", "bot");
+}
+
+/* =========================
+   QUICK BUTTONS
+========================= */
+function quickAsk(text) {
+    sendMessage(text);
+}
+
+/* =========================
+   EVENTS
+========================= */
+sendBtn.addEventListener("click", () => sendMessage());
+
+input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") sendMessage();
+});
+
+/* =========================
+   WELCOME MESSAGE
+========================= */
+addMessage("Hello! I am your learning assistant. I can help you with lessons and quizzes.", "bot");
+
+</script>
+
+{% endblock %}

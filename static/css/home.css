@@ -1,0 +1,162 @@
+/* =========================
+   AI BANNER (HERO SECTION)
+========================= */
+
+.ai-banner {
+    position: relative;
+    margin-bottom: 30px;
+    padding: 70px 40px;
+    border-radius: 24px;
+
+    background: radial-gradient(circle at top left, #4f46e5, transparent 55%),
+                radial-gradient(circle at bottom right, #7c3aed, transparent 60%),
+                linear-gradient(135deg, #0b1220, #0f172a);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+
+    overflow: hidden;
+}
+
+/* glow effect */
+.ai-banner::before,
+.ai-banner::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+}
+
+.ai-banner::before {
+    background: #4f46e5;
+    top: -100px;
+    left: -100px;
+}
+
+.ai-banner::after {
+    background: #7c3aed;
+    bottom: -120px;
+    right: -120px;
+}
+
+.ai-banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 750px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* TITLE */
+.ai-banner h2 {
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+/* TEXT */
+.ai-banner p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+/* BUTTON */
+.ai-btn {
+    display: inline-block;
+    padding: 11px 20px;
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: 0.25s ease;
+    box-shadow: 0 12px 30px rgba(124, 58, 237, 0.3);
+}
+
+.ai-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(124, 58, 237, 0.45);
+}
+
+/* =========================
+   SUBJECT CARDS (MODERN FIX)
+========================= */
+
+.subject-card {
+    background: #0f1b33 !important;
+    border: 1px solid #1b2a4a !important;
+    border-radius: 20px !important;
+
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(124, 58, 237, 0.6) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* HEADER */
+.subject-header {
+    background: #132242 !important;
+    color: white !important;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 16px;
+    font-weight: 600;
+}
+
+/* BODY */
+.card-body {
+    background: #0f1b33;
+}
+
+/* TEST ITEM */
+.test-item {
+    display: block;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+
+    border-radius: 10px;
+
+    background: rgba(124, 58, 237, 0.08);
+    border-left: 3px solid #7c3aed;
+
+    color: #e5e7eb;
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.test-item:hover {
+    background: rgba(124, 58, 237, 0.15);
+    transform: translateX(4px);
+}
+
+/* EMPTY STATE */
+.test-item-empty {
+    color: #8b8b8b;
+    padding: 10px;
+}
+
+/* =========================
+   PAGE TITLE
+========================= */
+
+.page-title {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 20px;
+}

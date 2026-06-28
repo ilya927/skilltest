@@ -1,0 +1,252 @@
+body {
+    margin: 0;
+
+    background: url("/static/img/battle/battlebackground.jpg") no-repeat center center fixed;
+    background-size: cover;
+
+    overflow-x: hidden;
+}
+
+/* =========================
+   BASE DARK OVERLAY (СТАБИЛЬНЫЙ СЛОЙ)
+========================= */
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 17, 32, 0.65);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* =========================
+   RAGE MODE (ФИОЛЕТОВАЯ АУРА)
+========================= */
+
+body.rage-mode::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+
+    background: radial-gradient(
+        circle,
+        rgba(160, 0, 255, 0.25),
+        transparent 60%
+    );
+
+    animation: ragePulse 1.2s infinite;
+}
+
+@keyframes ragePulse {
+    0% { opacity: 0.25; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.25; }
+}
+
+/* =========================
+   WRAPPER (ВАЖНО: над слоями)
+========================= */
+
+.battle-wrapper {
+    padding: 20px;
+    animation: fadeIn 0.6s ease;
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* =========================
+   HUD (НЕ ТРОГАЕМ)
+========================= */
+
+.hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.hud-block {
+    width: 35%;
+}
+
+.label {
+    color: #cbd7f3;
+    font-size: 12px;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   HP BAR (НЕ ЛОМАЕМ)
+========================= */
+
+.hp-bar {
+    width: 100%;
+    height: 14px;
+    background: #162543;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #22345c;
+}
+
+.hp-fill {
+    width: 100%;
+    height: 100%;
+    transition: 0.3s;
+}
+
+.player { background: #1DB954; }
+.boss { background: #ff4d4d; }
+
+/* =========================
+   TIMER (3 СЕКУНДЫ — КРАСНЫЙ + МИГАНИЕ)
+========================= */
+
+.timer {
+    color: #1DB954;
+    font-size: 34px;
+    font-weight: bold;
+    min-width: 70px;
+    text-align: center;
+}
+
+.timer-warning {
+    color: #ff2d2d !important;
+    animation: timerFlash 0.35s infinite;
+}
+
+@keyframes timerFlash {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: 0.3; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* =========================
+   ARENA
+========================= */
+
+.arena {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 500px;
+}
+
+.side {
+    width: 30%;
+    text-align: center;
+}
+
+.char-img {
+    width: 250px;
+    user-select: none;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+/* =========================
+   CENTER UI
+========================= */
+
+.center-ui {
+    width: 40%;
+    text-align: center;
+}
+
+.question {
+    font-size: 48px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.combo {
+    color: #1DB954;
+    font-weight: bold;
+    min-height: 20px;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.answer {
+    width: 75%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #22345c;
+    background: #0f1b33;
+    color: white;
+    text-align: center;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.attack-btn {
+    margin-top: 15px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    background: #1DB954;
+    color: white;
+    font-weight: bold;
+}
+
+/* =========================
+   SHAKE (ПЕРСОНАЖИ)
+========================= */
+
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(-6px, 2px); }
+    50% { transform: translate(6px, -2px); }
+    75% { transform: translate(-4px, 2px); }
+    100% { transform: translate(0); }
+}
+
+.shake {
+    animation: shake 0.3s ease;
+}
+
+/* =========================
+   DAMAGE FLASH (ТОЛЬКО ИГРОК)
+========================= */
+
+.damage-flash {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 0, 0, 0.25);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    animation: flashRed 0.35s ease;
+}
+
+@keyframes flashRed {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* =========================
+   RAGE VISUAL BOOST (ДОБАВКА)
+========================= */
+
+body.rage-mode {
+    box-shadow: inset 0 0 120px rgba(160, 0, 255, 0.15);
+}

@@ -1,0 +1,275 @@
+.friends-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.page-title {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+/* ===================== */
+/* SEARCH */
+/* ===================== */
+
+.search-wrapper {
+    position: relative;
+    max-width: 500px;
+    margin-bottom: 30px;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #1b2a4a;
+    background: #0f1b33;
+    color: white;
+    outline: none;
+}
+
+.search-box input::placeholder {
+    color: #9fb2d9;
+}
+
+.search-box button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #c14dff;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.search-box button:hover {
+    transform: scale(1.05);
+}
+
+/* ===================== */
+/* SEARCH RESULTS */
+/* ===================== */
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    margin-top: 8px;
+
+    background: #0f1b33;
+    border: 1px solid #1b2a4a;
+    border-radius: 10px;
+
+    max-height: 250px;
+    overflow-y: auto;
+
+    z-index: 999;
+}
+
+.search-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 12px;
+
+    color: white;
+
+    border-bottom: 1px solid #1b2a4a;
+}
+
+.search-item:last-child {
+    border-bottom: none;
+}
+
+.search-item:hover {
+    background: #18284a;
+}
+
+.username {
+    color: white;
+    font-weight: 500;
+}
+
+.btn-add {
+    background: #d84dff;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-add:hover {
+    transform: scale(1.1);
+    background: #2f8fff;
+}
+
+/* ===================== */
+/* TITLES */
+/* ===================== */
+
+.section-title {
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+/* ===================== */
+/* REQUESTS */
+/* ===================== */
+
+.requests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.request-card {
+    background: #0f1b33;
+    border: 1px solid #1b2a4a;
+    border-radius: 10px;
+
+    padding: 12px 15px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: white;
+}
+
+.request-card span {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-accept {
+    background: #42ff8a;
+    color: black;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-accept:hover {
+    transform: scale(1.05);
+}
+
+.btn-reject {
+    background: #ff6b6b;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-reject:hover {
+    transform: scale(1.05);
+}
+
+/* ===================== */
+/* FRIENDS */
+/* ===================== */
+
+.friends-list {
+    display: grid;
+    gap: 10px;
+}
+
+.friend-card {
+    display: block;
+
+    text-decoration: none;
+    color: white;
+
+    background: #0f1b33;
+    border: 1px solid #1b2a4a;
+    border-radius: 10px;
+
+    padding: 12px 15px;
+
+    font-weight: 500;
+
+    transition: 0.2s;
+}
+
+.friend-card:link,
+.friend-card:visited,
+.friend-card:hover,
+.friend-card:active {
+    text-decoration: none;
+    color: white;
+}
+
+.friend-card:hover {
+    transform: translateX(5px);
+    background: #162446;
+}
+
+/* ===================== */
+/* EMPTY */
+/* ===================== */
+
+.empty {
+    color: #9fb2d9;
+    margin-top: 10px;
+}
+
+/* ===================== */
+/* TOAST */
+/* ===================== */
+
+.toast {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #111c33;
+    color: white;
+
+    padding: 12px 20px;
+
+    border-radius: 10px;
+    border: 1px solid #2a3b66;
+
+    opacity: 0;
+    transition: all 0.4s ease;
+
+    z-index: 9999;
+}
+
+.toast.show {
+    top: 20px;
+    opacity: 1;
+}
+
+.toast.success {
+    border-color: #42ff8a;
+}
+
+.toast.error {
+    border-color: #ff6b6b;
+}

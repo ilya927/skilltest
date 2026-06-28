@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Friend Profile
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/friendstat.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="friend-container">
+
+    <!-- HEADER -->
+    <div class="friend-header">
+
+        <div>
+            <h2 class="friend-name">{{ friend.username }}</h2>
+        </div>
+
+        <div class="friend-stats">
+
+            <div class="stat-box">
+                <span class="stat-title">🔥 Streak</span>
+                <span class="stat-value">{{ streak }}</span>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-title">📊 Avg</span>
+                <span class="stat-value">{{ avg_score|floatformat:1 }}%</span>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-title">📝 Tests</span>
+                <span class="stat-value">{{ total_tests }}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ACHIEVEMENTS -->
+    <h3 class="section-title">Achievements</h3>
+
+    <div class="achievements">
+
+        {% if achievements %}
+
+            {% for achievement in achievements %}
+                <div class="achievement {{ achievement.class }}">
+                    {{ achievement.name }}
+                </div>
+            {% endfor %}
+
+        {% else %}
+            <p class="empty">No achievements yet</p>
+        {% endif %}
+
+    </div>
+
+    <!-- LAST TESTS -->
+    <h3 class="section-title">Last 5 Tests</h3>
+
+    <div class="results-list">
+
+        {% for r in last_tests %}
+
+            <div class="result-card">
+
+                <div class="result-left">
+
+                    <div class="test-title">
+                        {{ r.test.title }}
+                    </div>
+
+                    <div class="test-date">
+                        {{ r.completed_at|date:"d M Y H:i" }}
+                    </div>
+
+                </div>
+
+                <div class="result-right">
+
+                    <div class="score">
+                        {{ r.score }}/{{ r.total_questions }}
+                    </div>
+
+                    <div class="accuracy">
+                        {{ r.accuracy }}%
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+            <p class="empty">No results yet</p>
+        {% endfor %}
+
+    </div>
+
+    <!-- COMPARE BUTTON -->
+    <div class="compare-section">
+        <a href="{% url 'compare' user_id=friend.id %}" class="compare-btn">
+            Compare with me
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

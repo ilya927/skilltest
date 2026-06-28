@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mathematics{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/subject.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="subject-header">
+
+    <div>
+        <h1>📘 Mathematics</h1>
+        <p>Learn. Train. Fight the boss.</p>
+    </div>
+
+    <a href="{% url 'math_battle' %}" class="battle-btn">
+        ⚔ Battle with Boss
+    </a>
+
+</div>
+
+<div class="subject-section">
+
+    <h2>📐 Key Formulas</h2>
+
+    <div class="subject-grid">
+
+        <div class="subject-card">
+            <h3>Quadratic Formula</h3>
+            <p class="formula">x = (-b ± √(b² - 4ac)) / 2a</p>
+            <p>Used to solve quadratic equations.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Square Identity</h3>
+            <p class="formula">(a + b)² = a² + 2ab + b²</p>
+            <p>Expansion formula for squares.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Distance</h3>
+            <p class="formula">v = s / t</p>
+            <p>Speed = distance divided by time.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Area of Circle</h3>
+            <p class="formula">S = πr²</p>
+            <p>Area of a circle.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Pythagorean Theorem</h3>
+            <p class="formula">a² + b² = c²</p>
+            <p>Right triangle relation.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Perimeter</h3>
+            <p class="formula">P = 2(a + b)</p>
+            <p>Sum of all sides.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Probability</h3>
+            <p class="formula">P = favorable / total</p>
+            <p>Chance of an event occurring.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Average</h3>
+            <p class="formula">mean = sum / count</p>
+            <p>Arithmetic mean of values.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="subject-section">
+
+    <h2>📚 Main Topics</h2>
+
+    <div class="subject-grid">
+
+        <div class="subject-card">
+            <h3>➗ Algebra</h3>
+            <p>Equations and expressions.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>📐 Geometry</h3>
+            <p>Shapes, angles and space.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>📊 Statistics</h3>
+            <p>Data and probability.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🧠 Logic</h3>
+            <p>Problem solving skills.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>📈 Functions</h3>
+            <p>Relationships between variables.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🔢 Numbers</h3>
+            <p>Integers, fractions, decimals.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>📏 Measurement</h3>
+            <p>Length, area, volume.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>⚔ Battle Training</h3>
+            <p>Prepare for math boss fights.</p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

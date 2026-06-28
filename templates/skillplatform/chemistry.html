@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Chemistry{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/subject.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="subject-header">
+
+    <div>
+        <h1>🧪 Chemistry</h1>
+        <p>Explore elements, reactions and molecular structures.</p>
+    </div>
+
+</div>
+
+<div class="subject-section">
+
+    <h2>🧬 Important Compounds</h2>
+
+    <div class="subject-grid">
+
+        <div class="subject-card">
+            <h3>💧 Water</h3>
+            <div class="formula">H₂O</div>
+            <p>Two hydrogen atoms bonded to one oxygen atom.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🔥 Combustion</h3>
+            <div class="formula">CH₄ + 2O₂ → CO₂ + 2H₂O</div>
+            <p>Methane burning in oxygen.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>⚡ Electrolysis</h3>
+            <div class="formula">2H₂O → 2H₂ + O₂</div>
+            <p>Water splits into hydrogen and oxygen.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🧬 Glucose</h3>
+            <div class="formula">C₆H₁₂O₆</div>
+            <p>Main energy source for living cells.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🌿 Photosynthesis</h3>
+            <div class="formula">
+                6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂
+            </div>
+            <p>Plants create glucose using sunlight.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🧪 Sulfuric Acid</h3>
+            <div class="formula">H₂SO₄</div>
+            <p>One of the most important industrial acids.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>☁️ Ammonia</h3>
+            <div class="formula">NH₃</div>
+            <p>Widely used in fertilizers.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>💎 Carbon</h3>
+            <div class="formula">C</div>
+            <p>Forms diamond, graphite and graphene.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="subject-section">
+
+    <h2>📊 Chemistry Facts</h2>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-number">118</div>
+            <div class="stat-label">Known Elements</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">92</div>
+            <div class="stat-label">Natural Elements</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">7</div>
+            <div class="stat-label">Periods</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">18</div>
+            <div class="stat-label">Groups</div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

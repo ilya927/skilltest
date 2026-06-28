@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}SkillTest{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid px-4">
+
+        <a class="navbar-brand" href="{% url 'home' %}">
+            SkillTest
+        </a>
+
+        <div class="d-flex align-items-center ms-auto">
+
+            {% if user.is_authenticated %}
+                <span class="text-white me-3">{{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">
+                    Logout
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm me-2">
+                    Login
+                </a>
+
+                <a href="{% url 'register' %}" class="btn btn-primary btn-sm">
+                    Register
+                </a>
+            {% endif %}
+
+        </div>
+
+    </div>
+</nav>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-section">
+
+            <h5>Subjects</h5>
+
+            <a href="{% url 'math_page' %}">Mathematics</a>
+            <a href="{% url 'physics_page' %}">Physics</a>
+            <a href="{% url 'chemistry_page' %}">Chemistry</a>
+            <a href="{% url 'biology_page' %}">Biology</a>
+            <a href="{% url 'english_page' %}">English</a>
+            <a href="{% url 'history_page' %}">History</a>
+
+        </div>
+
+        <hr class="sidebar-separator">
+
+        <div class="sidebar-section">
+
+            <h5>Results</h5>
+
+            <a href="{% url 'results' %}">
+                My Results
+            </a>
+
+            <a href="{% url 'friends' %}">
+                Friends
+            </a>
+
+        </div>
+
+    </aside>
+
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

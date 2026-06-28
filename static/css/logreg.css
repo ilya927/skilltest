@@ -1,0 +1,243 @@
+html,
+body{
+    margin:0;
+    padding:0;
+    height:100%;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#050414;
+    overflow:hidden;
+    color:white;
+}
+
+/* ===========================
+   BACKGROUND
+=========================== */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background:
+        radial-gradient(circle at 20% 25%, rgba(99,102,241,.25), transparent 45%),
+        radial-gradient(circle at 80% 30%, rgba(168,85,247,.25), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(59,130,246,.20), transparent 45%);
+
+    z-index:0;
+}
+
+/* ===========================
+   CENTER
+=========================== */
+
+.page{
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    width:100%;
+    height:100%;
+}
+
+/* ===========================
+   CARD
+=========================== */
+
+.glass{
+
+    width:430px;
+
+    padding:45px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(168,85,247,.25);
+
+    backdrop-filter:blur(16px);
+
+    -webkit-backdrop-filter:blur(16px);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.5);
+}
+
+/* ===========================
+   TITLE
+=========================== */
+
+.glass h2 {
+
+    text-align: center;
+
+    font-size: 2.3rem;
+
+    margin-bottom: 10px;
+
+    background: linear-gradient(
+        90deg,
+        #6366f1,
+        #a855f7,
+        #3b82f6
+    );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+.subtitle{
+
+    text-align:center;
+
+    opacity:.7;
+
+    margin-bottom:30px;
+}
+
+/* ===========================
+   INPUTS
+=========================== */
+
+.form-control{
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    color:white;
+
+    border-radius:12px;
+
+    padding:13px 15px;
+}
+
+.form-control::placeholder{
+    color:rgba(255,255,255,.45);
+}
+
+.form-control:focus{
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    border-color:#8b5cf6;
+
+    box-shadow:0 0 18px rgba(168,85,247,.25);
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+.btn-main{
+
+    width:100%;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:13px;
+
+    color:white;
+
+    font-weight:600;
+
+    background:linear-gradient(
+        90deg,
+        #6366f1,
+        #a855f7
+    );
+
+    transition:.25s;
+}
+
+.btn-main:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(168,85,247,.35);
+}
+
+/* ===========================
+   ALERTS
+=========================== */
+
+.alert{
+
+    border:none;
+
+    border-radius:12px;
+}
+
+/* ===========================
+   LINKS
+=========================== */
+
+.bottom-link{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:rgba(255,255,255,.7);
+}
+
+.bottom-link a{
+
+    color:#a855f7;
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+.bottom-link a:hover{
+
+    color:#c084fc;
+}
+
+/* ===========================
+   BACK BUTTON
+=========================== */
+
+.back-btn{
+
+    position:fixed;
+
+    top:25px;
+    left:25px;
+
+    z-index:10;
+
+    text-decoration:none;
+
+    color:white;
+
+    padding:10px 18px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(12px);
+
+    transition:.2s;
+}
+
+.back-btn:hover{
+
+    color:white;
+
+    background:rgba(168,85,247,.18);
+
+    border-color:#a855f7;
+}

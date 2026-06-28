@@ -1,0 +1,230 @@
+
+
+.subject-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(15, 27, 51, 0.85);
+    backdrop-filter: blur(10px);
+
+    padding: 24px;
+    border-radius: 14px;
+
+    margin-bottom: 25px;
+
+    border: 1px solid rgba(255,255,255,0.06);
+
+    color: white;
+
+    transition: 0.25s ease;
+}
+
+.subject-header:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.subject-header h1 {
+    margin: 0;
+    font-size: 34px;
+}
+
+.subject-header p {
+    margin: 6px 0 0;
+    color: #cbd7f3;
+}
+
+/* =========================
+   BATTLE BUTTON
+========================= */
+
+.battle-btn {
+    background: #ff4d4d;
+    color: white;
+
+    padding: 12px 18px;
+    border-radius: 10px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.battle-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255,77,77,0.3);
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.subject-section {
+    margin-bottom: 30px;
+}
+
+.subject-section h2 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+@media (max-width: 1100px) {
+    .subject-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 800px) {
+    .subject-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 500px) {
+    .subject-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.subject-card {
+    background: #0f1b33;
+
+    border-radius: 14px;
+    padding: 18px;
+
+    border: 1px solid rgba(255,255,255,0.05);
+
+    transition: 0.2s;
+
+    color: white;
+}
+
+.subject-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(29,185,84,0.4);
+    box-shadow: 0 0 20px rgba(29,185,84,0.12);
+}
+
+.subject-card h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.subject-card p {
+    margin: 0;
+    color: #cbd7f3;
+}
+
+/* =========================
+   FORMULA BOX
+========================= */
+
+.formula {
+    color: #1DB954;
+    font-size: 22px;
+    font-weight: bold;
+
+    margin: 10px 0;
+
+    font-family: Consolas, monospace;
+}
+
+/* =========================
+   OLD BOX (compat)
+========================= */
+
+.box {
+    background: #132242;
+    padding: 14px;
+
+    border-radius: 10px;
+
+    color: #1DB954;
+
+    margin-bottom: 10px;
+
+    font-family: monospace;
+
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* =========================
+   LESSON
+========================= */
+
+.lesson {
+    background: #0f1b33;
+    padding: 14px;
+
+    border-radius: 10px;
+
+    margin-bottom: 10px;
+
+    color: white;
+
+    border-left: 4px solid #1DB954;
+
+    transition: 0.2s;
+}
+
+.lesson:hover {
+    transform: translateX(3px);
+    box-shadow: 0 0 15px rgba(29,185,84,0.08);
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+@media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 500px) {
+    .stats-grid { grid-template-columns: 1fr; }
+}
+
+.stat-card {
+    background: #0f1b33;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    text-align: center;
+
+    border: 1px solid rgba(255,255,255,0.05);
+
+    transition: 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(29,185,84,0.12);
+}
+
+.stat-number {
+    color: #1DB954;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.stat-label {
+    color: #cbd7f3;
+}

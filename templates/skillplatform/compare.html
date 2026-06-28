@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Compare{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/compare.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="compare-container">
+
+    <!-- HEADER -->
+    <div class="vs-header">
+        <div class="you">YOU</div>
+        <div class="vs">⚔️</div>
+        <div class="friend">{{ friend.username }}</div>
+    </div>
+
+    <!-- WINNER -->
+    <div class="winner-box">
+        Winner: <span>{{ winner }}</span>
+    </div>
+
+    <!-- SAFE DATA -->
+    {{ my_avg|default:0|json_script:"myAvg" }}
+    {{ friend_avg|default:0|json_script:"friendAvg" }}
+
+    {{ my_streak|default:0|json_script:"myStreak" }}
+    {{ friend_streak|default:0|json_script:"friendStreak" }}
+
+    {{ my_tests|default:0|json_script:"myTests" }}
+    {{ friend_tests|default:0|json_script:"friendTests" }}
+
+    <!-- CHART -->
+    <div class="chart-box">
+        <canvas id="compareChart"></canvas>
+    </div>
+
+    <!-- STATS -->
+    <div class="compare-grid">
+
+        <div class="card you-card">
+            <h3>Your Stats</h3>
+            <div class="stat">Avg: {{ my_avg|floatformat:1 }}%</div>
+            <div class="stat">Streak: {{ my_streak }}</div>
+            <div class="stat">Tests: {{ my_tests }}</div>
+        </div>
+
+        <div class="card friend-card">
+            <h3>{{ friend.username }} Stats</h3>
+            <div class="stat">Avg: {{ friend_avg|floatformat:1 }}%</div>
+            <div class="stat">Streak: {{ friend_streak }}</div>
+            <div class="stat">Tests: {{ friend_tests }}</div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const myAvg = JSON.parse(document.getElementById("myAvg").textContent);
+const friendAvg = JSON.parse(document.getElementById("friendAvg").textContent);
+
+const myStreak = JSON.parse(document.getElementById("myStreak").textContent);
+const friendStreak = JSON.parse(document.getElementById("friendStreak").textContent);
+
+const myTests = JSON.parse(document.getElementById("myTests").textContent);
+const friendTests = JSON.parse(document.getElementById("friendTests").textContent);
+
+const ctx = document.getElementById('compareChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Avg %', 'Streak', 'Tests'],
+        datasets: [
+            {
+                label: 'You',
+                data: [myAvg, myStreak, myTests],
+                backgroundColor: '#3b82f6',
+                borderRadius: 8,
+                barPercentage: 0.6,
+                categoryPercentage: 0.5
+            },
+            {
+                label: '{{ friend.username }}',
+                data: [friendAvg, friendStreak, friendTests],
+                backgroundColor: '#a855f7',
+                borderRadius: 8,
+                barPercentage: 0.6,
+                categoryPercentage: 0.5
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white'
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: false,
+                ticks: { color: 'white' },
+                grid: {
+                    color: 'rgba(255,255,255,0.08)'
+                }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: { color: 'white' },
+                grid: {
+                    color: 'rgba(255,255,255,0.12)'
+                }
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

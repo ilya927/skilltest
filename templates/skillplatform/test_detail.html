@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ test.title }}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/test.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="test-container">
+
+    <h2 class="test-title">{{ test.title }}</h2>
+    <p class="test-desc">{{ test.description }}</p>
+
+    <div class="stats-row">
+
+        <div class="score-box">
+            Score: <span id="score">0</span> / {{ questions|length }}
+        </div>
+
+        <div class="progress-wrapper">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="timer-box">
+            Time: <span id="timer">00:00</span>
+        </div>
+
+    </div>
+
+    {% for question in questions %}
+
+    <div class="question-card">
+
+        <div class="question-text">
+            {{ question.text }}
+        </div>
+
+        <div class="options">
+
+            <div class="option" data-option="1" data-correct="{{ question.correct_option }}">
+                {{ question.option1 }}
+            </div>
+
+            <div class="option" data-option="2" data-correct="{{ question.correct_option }}">
+                {{ question.option2 }}
+            </div>
+
+            <div class="option" data-option="3" data-correct="{{ question.correct_option }}">
+                {{ question.option3 }}
+            </div>
+
+            <div class="option" data-option="4" data-correct="{{ question.correct_option }}">
+                {{ question.option4 }}
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+<!-- scroll button -->
+<button id="scrollTopBtn" class="scroll-top-btn">↑</button>
+
+<!-- result modal -->
+<div id="resultModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close-btn" id="closeModal">×</span>
+
+        <h2>🏁 Results</h2>
+
+        <p>Score: <span id="finalScore"></span></p>
+        <p>Percent: <span id="finalPercent"></span>%</p>
+        <p>Time: <span id="finalTime"></span></p>
+
+        <button onclick="location.reload()">Try again</button>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+
+let score = 0;
+let answeredQuestions = 0;
+let seconds = 0;
+
+const totalQuestions = Number("{{ questions|length }}");
+
+
+// ================= CSRF =================
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+// ================= OPTIONS =================
+document.querySelectorAll(".option").forEach(option => {
+
+    option.addEventListener("click", function () {
+
+        const card = this.closest(".question-card");
+
+        if (card.classList.contains("answered")) return;
+
+        const selected = this.dataset.option;
+        const correct = this.dataset.correct;
+
+        if (selected === correct) {
+            this.classList.add("correct");
+            score++;
+            document.getElementById("score").textContent = score;
+        } else {
+            this.classList.add("wrong");
+
+            card.querySelectorAll(".option").forEach(opt => {
+                if (opt.dataset.option === correct) {
+                    opt.classList.add("correct");
+                }
+            });
+        }
+
+        answeredQuestions++;
+
+        const percent = (answeredQuestions / totalQuestions) * 100;
+
+        document.getElementById("progress-fill").style.width = percent + "%";
+
+        card.classList.add("answered");
+
+        card.querySelectorAll(".option").forEach(opt => {
+            opt.style.pointerEvents = "none";
+        });
+
+        if (answeredQuestions === totalQuestions) {
+            showResultModal();
+        }
+
+    });
+
+});
+
+
+// ================= TIMER =================
+setInterval(() => {
+    seconds++;
+
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+
+    document.getElementById("timer").textContent =
+        String(mins).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
+
+}, 1000);
+
+
+// ================= CONFETTI =================
+function launchConfetti() {
+    const end = Date.now() + 2000;
+
+    (function frame() {
+        confetti({
+            particleCount: 6,
+            spread: 80,
+            startVelocity: 35,
+            origin: {
+                x: Math.random(),
+                y: Math.random() - 0.2
+            }
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    })();
+}
+
+
+// ================= SAVE RESULT =================
+function saveResult(score, total, percent, duration) {
+
+    fetch(`/test/{{ test.id }}/save/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify({
+            score: score,
+            total_questions: total,
+            accuracy: percent,
+            duration: duration
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Saved:", data);
+    })
+    .catch(err => {
+        console.error("Save error:", err);
+    });
+}
+
+
+// ================= MODAL =================
+function showResultModal() {
+
+    const percent = Math.round((score / totalQuestions) * 100);
+
+    document.getElementById("finalScore").textContent =
+        score + " / " + totalQuestions;
+
+    document.getElementById("finalPercent").textContent =
+        percent;
+
+    document.getElementById("finalTime").textContent =
+        document.getElementById("timer").textContent;
+
+    if (percent >= 50) {
+        launchConfetti();
+    }
+
+    // 🔥 SAVE TO DATABASE
+    saveResult(score, totalQuestions, percent, seconds);
+
+    document.getElementById("resultModal").style.display = "block";
+}
+
+
+// close modal
+document.getElementById("closeModal").onclick = function () {
+    document.getElementById("resultModal").style.display = "none";
+};
+
+
+// click outside
+window.onclick = function(event) {
+    const modal = document.getElementById("resultModal");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+};
+
+
+// scroll button
+const scrollBtn = document.getElementById("scrollTopBtn");
+
+scrollBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 200) {
+        scrollBtn.style.opacity = "1";
+        scrollBtn.style.pointerEvents = "auto";
+    } else {
+        scrollBtn.style.opacity = "0";
+        scrollBtn.style.pointerEvents = "none";
+    }
+});
+
+</script>
+
+{% endblock %}

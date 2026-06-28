@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Math Battle{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/math_battle.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- SCREEN FLASH -->
+<div class="screen-flash" id="screenFlash"></div>
+
+<div class="battle-wrapper">
+
+    <div class="hud">
+
+        <div class="hud-block">
+            <div class="label">PLAYER</div>
+            <div class="hp-bar">
+                <div class="hp-fill player" id="playerHp"></div>
+            </div>
+        </div>
+
+        <div class="timer" id="timer">10</div>
+
+        <div class="hud-block">
+            <div class="label">BOSS</div>
+            <div class="hp-bar">
+                <div class="hp-fill boss" id="bossHp"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="arena">
+
+        <div class="side" id="playerSide">
+            <img src="{% static 'img/battle/clever_owl.png' %}" class="char-img">
+        </div>
+
+        <div class="center-ui">
+
+            <div id="comboText" class="combo"></div>
+            <div id="question" class="question"></div>
+
+            <input type="number" id="answer" class="answer">
+
+            <button class="attack-btn" onclick="submitAnswer()">ATTACK</button>
+
+        </div>
+
+        <div class="side" id="bossSide">
+            <img id="bossImg"
+                 src="{% static 'img/battle/battlemonster.png' %}"
+                 class="char-img">
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let bossHP = 100;
+let playerHP = 100;
+
+let currentAnswer = 0;
+let timeLeft = 10;
+let timer = null;
+
+let gameOver = false;
+let phase = 1;
+let combo = 0;
+
+updateHP();
+generateQuestion();
+startTimer();
+
+/* ================= QUESTION ================= */
+
+function generateQuestion() {
+
+    if (gameOver) return;
+
+    let a, b;
+
+    if (phase === 1) {
+        a = Math.floor(Math.random() * 10) + 1;
+        b = Math.floor(Math.random() * 10) + 1;
+    } else {
+        // phase 2: 11–15 × 1–9
+        a = Math.floor(Math.random() * 5) + 11;
+        b = Math.floor(Math.random() * 9) + 1;
+    }
+
+    currentAnswer = a * b;
+
+    document.getElementById("question").innerText = `${a} × ${b} = ?`;
+    document.getElementById("answer").value = "";
+}
+
+/* ================= ANSWER ================= */
+
+function submitAnswer() {
+
+    if (gameOver) return;
+
+    const value = Number(document.getElementById("answer").value);
+
+    let damage = 15;
+
+    if (value === currentAnswer) {
+
+        combo++;
+
+        if (combo >= 5) damage *= 2;
+        else if (combo >= 3) damage *= 1.5;
+        else if (combo >= 2) damage *= 1.2;
+
+        bossHP -= damage;
+
+        shake("bossSide");
+
+    } else {
+
+        combo = 0;
+        playerHP -= 15;
+
+        shake("playerSide");
+        screenFlash(); // 🔴 ONLY PLAYER DAMAGE
+    }
+
+    document.getElementById("comboText").innerText =
+        combo > 1 ? `COMBO x${combo}` : "";
+
+    clampHP();
+    updateHP();
+    checkPhase();
+    checkGameOver();
+
+    if (!gameOver) {
+        generateQuestion();
+        resetTimer();
+    }
+}
+
+/* ================= TIMER ================= */
+
+function startTimer() {
+
+    timer = setInterval(() => {
+
+        if (gameOver) return;
+
+        timeLeft--;
+
+        const t = document.getElementById("timer");
+        t.innerText = timeLeft;
+
+        if (timeLeft <= 3) {
+            t.classList.add("timer-warning");
+        } else {
+            t.classList.remove("timer-warning");
+        }
+
+        if (timeLeft <= 0) {
+
+            playerHP -= 10;
+
+            shake("playerSide");
+            screenFlash();
+
+            clampHP();
+            updateHP();
+            checkGameOver();
+            generateQuestion();
+            resetTimer();
+        }
+
+    }, 1000);
+}
+
+function resetTimer() {
+    timeLeft = 10;
+    document.getElementById("timer").innerText = timeLeft;
+}
+
+/* ================= HP ================= */
+
+function clampHP() {
+    bossHP = Math.max(0, bossHP);
+    playerHP = Math.max(0, playerHP);
+}
+
+function updateHP() {
+    document.getElementById("bossHp").style.width = bossHP + "%";
+    document.getElementById("playerHp").style.width = playerHP + "%";
+}
+
+/* ================= PHASE ================= */
+
+function checkPhase() {
+
+    if (phase === 1 && bossHP <= 50) {
+        phase = 2;
+        document.body.classList.add("rage-mode");
+
+        document.getElementById("bossImg").src =
+            "{% static 'img/battle/angryfinalboss.png' %}";
+    }
+}
+
+/* ================= GAME OVER ================= */
+
+function checkGameOver() {
+    if (bossHP <= 0) endGame("🏆 YOU WIN", "win-text");
+    if (playerHP <= 0) endGame("💀 YOU LOSE", "lose-text");
+}
+
+function endGame(text, cls) {
+
+    gameOver = true;
+    clearInterval(timer);
+
+    const q = document.getElementById("question");
+    q.innerHTML = text;
+    q.classList.add(cls);
+
+    document.getElementById("answer").style.display = "none";
+    document.querySelector(".attack-btn").style.display = "none";
+}
+
+/* ================= EFFECTS ================= */
+
+function shake(id) {
+    const el = document.getElementById(id);
+    el.classList.remove("shake");
+    void el.offsetWidth;
+    el.classList.add("shake");
+}
+
+function screenFlash() {
+    const f = document.getElementById("screenFlash");
+
+    f.classList.add("active");
+
+    setTimeout(() => {
+        f.classList.remove("active");
+    }, 200);
+}
+
+</script>
+
+{% endblock %}

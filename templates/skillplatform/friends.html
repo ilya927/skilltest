@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Friends{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/friends.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="friends-container">
+
+    <h2 class="page-title">Add Friends</h2>
+
+    <!-- SEARCH -->
+    <div class="search-wrapper">
+
+        <form method="GET" class="search-box">
+            <input
+                type="text"
+                name="q"
+                placeholder="Search users..."
+                value="{{ query }}"
+                autocomplete="off"
+            >
+            <button type="submit">Search</button>
+        </form>
+
+        {% if query %}
+        <div class="search-results">
+
+            {% for user in users %}
+
+            <div class="search-item">
+
+                <span class="username">{{ user.username }}</span>
+
+                <button
+                    class="btn-add"
+                    data-user-id="{{ user.id }}"
+                    onclick="sendFriend(this.dataset.userId)"
+                >
+                    Add Friend
+                </button>
+
+            </div>
+
+            {% empty %}
+                <div class="search-item">
+                    No users found
+                </div>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- REQUESTS -->
+    <h3 class="section-title">Friend Requests</h3>
+
+    <div class="requests-list">
+
+        {% for req in received_requests %}
+
+            {% if req.status == "pending" %}
+
+            <div class="request-card">
+
+                <span>{{ req.from_user.username }}</span>
+
+                <div class="actions">
+
+                    <a class="btn-accept" href="{% url 'accept_friend' req.id %}">
+                        Accept
+                    </a>
+
+                    <a class="btn-reject" href="{% url 'reject_friend' req.id %}">
+                        Reject
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        {% empty %}
+            <p class="empty">No requests</p>
+        {% endfor %}
+
+    </div>
+
+    <!-- FRIENDS -->
+    <h3 class="section-title">My Friends</h3>
+
+    <div class="friends-list">
+
+        {% for friend in friends %}
+
+            <!-- ВАЖНО: теперь друг кликабельный -->
+            <a href="{% url 'friendstat' friend.id %}" class="friend-card">
+                {{ friend.username }}
+            </a>
+
+        {% empty %}
+            <p class="empty">No friends yet</p>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<script>
+function showToast(text, type="success") {
+    const toast = document.getElementById("toast");
+
+    toast.innerText = text;
+    toast.className = "toast show " + type;
+
+    setTimeout(() => {
+        toast.className = "toast";
+    }, 2500);
+}
+
+function sendFriend(userId) {
+
+    fetch(`/friends/send/${userId}/`, {
+        method: "GET",
+        credentials: "same-origin"
+    })
+    .then(res => {
+        if (res.ok) {
+            showToast("Friend request sent 🔥", "success");
+        } else {
+            showToast("Error ❌", "error");
+        }
+    })
+    .catch(() => {
+        showToast("Network error ❌", "error");
+    });
+}
+</script>
+
+{% endblock %}

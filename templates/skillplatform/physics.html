@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Physics{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/subject.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="subject-header">
+
+    <div>
+        <h1>⚛️ Physics</h1>
+        <p>Understand the universe.</p>
+    </div>
+
+</div>
+
+<div class="subject-section">
+
+    <h2>⚡ Key Formulas</h2>
+
+    <div class="subject-grid">
+
+        <div class="subject-card">
+            <h3>Force</h3>
+            <p class="formula">F = m × a</p>
+            <p>Force equals mass times acceleration.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Speed</h3>
+            <p class="formula">v = s / t</p>
+            <p>Speed equals distance over time.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Energy</h3>
+            <p class="formula">E = m × c²</p>
+            <p>Mass-energy equivalence.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Power</h3>
+            <p class="formula">P = W / t</p>
+            <p>Power equals work over time.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Ohm's Law</h3>
+            <p class="formula">V = I × R</p>
+            <p>Voltage equals current times resistance.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Work</h3>
+            <p class="formula">W = F × d</p>
+            <p>Work equals force times distance.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Momentum</h3>
+            <p class="formula">p = m × v</p>
+            <p>Momentum equals mass times velocity.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>Acceleration</h3>
+            <p class="formula">a = (v - u) / t</p>
+            <p>Change in velocity over time.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="subject-section">
+
+    <h2>📚 Main Topics</h2>
+
+    <div class="subject-grid">
+
+        <div class="subject-card">
+            <h3>🏃 Motion</h3>
+            <p>Study of moving objects.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>⚙️ Forces</h3>
+            <p>Push and pull interactions.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🔥 Energy</h3>
+            <p>Different forms of energy.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>💡 Electricity</h3>
+            <p>Charges, circuits and current.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🌊 Waves</h3>
+            <p>Sound and light waves.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🌌 Space</h3>
+            <p>Planets, gravity and universe.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>⚛️ Atoms</h3>
+            <p>Structure of matter.</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>🔋 Electricity Basics</h3>
+            <p>Voltage, current and resistance.</p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

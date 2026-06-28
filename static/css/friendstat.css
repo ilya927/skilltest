@@ -1,0 +1,348 @@
+.friend-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 25px;
+    color: white;
+}
+
+/* HEADER */
+
+.friend-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+}
+
+.friend-name {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 0;
+}
+
+/* STATS */
+
+.friend-stats {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    background: #121c33;
+    border: 1px solid #24304d;
+    border-radius: 12px;
+    padding: 15px 20px;
+    min-width: 120px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    transition: 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-3px);
+    border-color: #8b5cf6;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+}
+
+.stat-title {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* TITLES */
+
+.section-title {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* RESULTS */
+
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.result-card {
+    background: #121c33;
+    border: 1px solid #24304d;
+    border-radius: 12px;
+    padding: 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    transition: 0.3s ease;
+}
+
+.result-card:hover {
+    border-color: #8b5cf6;
+    transform: translateY(-2px);
+}
+
+.test-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.test-date {
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.result-right {
+    text-align: right;
+}
+
+.score {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.accuracy {
+    font-size: 15px;
+    color: #8b5cf6;
+    font-weight: 600;
+}
+
+.empty {
+    opacity: 0.7;
+    text-align: center;
+    padding: 20px;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+    .friend-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .friend-stats {
+        width: 100%;
+    }
+
+    .stat-box {
+        flex: 1;
+    }
+
+    .result-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .result-right {
+        text-align: left;
+    }
+}
+
+/* =========================
+   ACHIEVEMENTS BASE
+========================= */
+
+.achievements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.achievement {
+    position: relative;
+    background: #1a2a4a;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    overflow: hidden;
+}
+
+/* =========================
+   GOLD - MASTER STUDENT
+========================= */
+
+.achievement.master {
+    position: relative;
+}
+
+.achievement.master::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: 12px;
+    background: linear-gradient(
+        90deg,
+        #ffd700,
+        #ffec8b,
+        #ffb300,
+        #ffd700
+    );
+
+    background-size: 300% 300%;
+    animation: goldMove 2.5s linear infinite;
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    pointer-events: none;
+}
+
+@keyframes goldMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+/* =========================
+   FIRE - STREAK
+========================= */
+
+.achievement.streak {
+    position: relative;
+}
+
+.achievement.streak::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        90deg,
+        #ff3b30,
+        #ff9500,
+        #ff3b30,
+        #ffcc00
+    );
+
+    background-size: 300% 300%;
+    animation: fireMove 1.5s linear infinite;
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    pointer-events: none;
+}
+
+@keyframes fireMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* =========================
+   BLUE - SOLVER
+========================= */
+
+.achievement.solver {
+    position: relative;
+}
+
+.achievement.solver::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        90deg,
+        #3b82f6,
+        #60a5fa,
+        #2563eb,
+        #93c5fd
+    );
+
+    background-size: 300% 300%;
+    animation: blueGlow 2.2s linear infinite;
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    pointer-events: none;
+}
+
+@keyframes blueGlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* =========================
+   COMPARE BUTTON
+========================= */
+
+.compare-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    padding-bottom: 10px;
+}
+
+.compare-btn {
+    position: relative;
+    padding: 12px 34px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 50px;
+    background: #0b1220;
+    z-index: 1;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.compare-btn::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50px;
+    background: linear-gradient(
+        270deg,
+        #a855f7,
+        #7c3aed,
+        #c084fc,
+        #a855f7
+    );
+    background-size: 300% 300%;
+    z-index: -1;
+    animation: purpleBorder 3s linear infinite;
+}
+
+@keyframes purpleBorder {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.compare-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+}

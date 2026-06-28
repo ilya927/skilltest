@@ -1,0 +1,134 @@
+body {
+    background: #051120;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
+/* ====== FLOATING DOT BACKGROUND ====== */
+
+/* слой с точками */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background-image:
+        radial-gradient(circle, rgba(77, 163, 255, 0.8) 1px, transparent 1px),
+        radial-gradient(circle, rgba(203, 215, 243, 0.4) 1px, transparent 1px),
+        radial-gradient(circle, rgba(29, 185, 84, 0.25) 1px, transparent 1px);
+
+    background-size: 80px 80px, 120px 120px, 160px 160px;
+    background-position: 0 0, 40px 60px, 20px 30px;
+
+    animation: floatDots 25s linear infinite;
+    opacity: 0.6;
+    z-index: 0;
+}
+
+/* мягкое свечение */
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: radial-gradient(
+        circle at 50% 30%,
+        rgba(77, 163, 255, 0.15),
+        transparent 60%
+    );
+
+    z-index: 0;
+}
+
+/* анимация движения точек */
+@keyframes floatDots {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-200px, -200px);
+    }
+}
+
+/* ====== LAYOUT ====== */
+
+.navbar {
+    background: #0f1b33 !important;
+    border-bottom: 1px solid #1b2a4a;
+    position: relative;
+    z-index: 2;
+}
+
+.layout {
+    display: flex;
+    min-height: calc(100vh - 60px);
+    position: relative;
+    z-index: 2;
+}
+
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: #0f1b33;
+    border-right: 1px solid #1b2a4a;
+    padding: 20px;
+}
+
+.sidebar-section h5 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #cbd7f3;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: 0.2s;
+}
+
+.sidebar a:hover {
+    background: #18284a;
+    color: #4da3ff;
+}
+
+.sidebar-separator {
+    border: none;
+    border-top: 1px solid #1b2a4a;
+    margin: 25px 0;
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+    padding: 30px;
+}
+
+.page-title {
+    margin-bottom: 25px;
+    color: white;
+}
+
+/* ====== WELCOME PAGE FIX ====== */
+
+.container {
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    color: white;
+}
+
+p {
+    color: #cbd7f3;
+}

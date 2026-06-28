@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Results
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/results.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">My Results</h2>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <h3>{{ results.count }}</h3>
+        <p>Tests Completed</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>
+            {% if results %}
+                {{ results.0.accuracy }}%
+            {% else %}
+                0%
+            {% endif %}
+        </h3>
+        <p>Latest Score</p>
+    </div>
+
+</div>
+
+<h3 class="section-title">Recent Attempts</h3>
+
+{% if results %}
+
+<div class="results-table">
+
+    <div class="table-header">
+        <div>Test</div>
+        <div>Score</div>
+        <div>Accuracy</div>
+        <div>Time</div>
+        <div>Date</div>
+    </div>
+
+    {% for result in results %}
+
+    <div class="table-row">
+
+        <div>
+            {{ result.test.title }}
+        </div>
+
+        <div>
+            {{ result.score }}/{{ result.total_questions }}
+        </div>
+
+        <div>
+            <span class="
+                {% if result.accuracy >= 80 %}
+                    score-green
+                {% elif result.accuracy >= 50 %}
+                    score-yellow
+                {% else %}
+                    score-red
+                {% endif %}
+            ">
+                {{ result.accuracy }}%
+            </span>
+        </div>
+
+        <div class="time-cell">
+            {{ result.formatted_duration }}
+        </div>
+
+        <div>
+            {{ result.completed_at|date:'d M Y' }}
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-state">
+    <h3>No Results Yet</h3>
+    <p>Complete your first test to see your statistics.</p>
+</div>
+
+{% endif %}
+
+{% endblock %}

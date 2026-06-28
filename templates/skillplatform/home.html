@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+SkillTest
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     AI BANNER (SINGLE BUTTON)
+========================= -->
+<div class="ai-banner mb-4">
+
+    <div class="ai-banner-content">
+
+        <h2>AI Study Assistant</h2>
+
+        <p>
+            Learn faster with AI-powered explanations, instant answers,
+            and smart test generation.
+        </p>
+
+        <a href="{% url 'ai' %}" class="btn btn-light btn-sm ai-btn">
+            Open AI Assistant
+        </a>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     TITLE
+========================= -->
+<h2 class="page-title">Available Tests</h2>
+
+<!-- =========================
+     SUBJECTS GRID
+========================= -->
+<div class="row">
+
+    {% for subject, tests in subjects.items %}
+
+    <div class="col-lg-4 col-md-6 mb-4">
+
+        <div class="card subject-card h-100">
+
+            <div class="card-header subject-header">
+                <span class="subject-title">{{ subject }}</span>
+                <span class="badge bg-primary">{{ tests|length }}</span>
+            </div>
+
+            <div class="card-body">
+
+                {% for test in tests %}
+
+                <a href="{% url 'test_detail' test.pk %}"
+                   class="test-item d-block text-decoration-none">
+
+                    {{ test.title }}
+
+                </a>
+
+                {% empty %}
+
+                <div class="test-item-empty">
+                    No tests available
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
