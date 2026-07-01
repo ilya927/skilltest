@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/leaderboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="leaderboard-container">
+
+    <h2 class="page-title">🏆 Top World</h2>
+
+    <!-- ===================== -->
+    <!-- 🥇 TOP 3 -->
+    <!-- ===================== -->
+    <div class="top-three">
+
+        {% for user in top_users %}
+
+            <div class="top-card rank-{{ forloop.counter }}">
+
+                <div class="rank">
+                    {% if forloop.counter == 1 %}
+                        🥇
+                    {% elif forloop.counter == 2 %}
+                        🥈
+                    {% elif forloop.counter == 3 %}
+                        🥉
+                    {% endif %}
+                </div>
+
+                <div class="name">
+                    {{ user.username }}
+                </div>
+
+                <div class="stats">
+                    ⭐ {{ user.score }} pts
+                </div>
+
+                <div class="substats">
+                    📝 {{ user.tests_count }} tests
+                    |
+                    🎯 {{ user.avg_accuracy }}%
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- 📊 REST USERS -->
+    <!-- ===================== -->
+    <div class="leaderboard-list">
+
+        {% for user in other_users %}
+
+            <div class="leaderboard-row">
+
+                <div class="left">
+                    <span class="place">
+                        #{{ forloop.counter|add:3 }}
+                    </span>
+
+                    <span class="username">
+                        {{ user.username }}
+                    </span>
+                </div>
+
+                <div class="right">
+                    <span>⭐ {{ user.score }}</span>
+                    <span>📝 {{ user.tests_count }}</span>
+                    <span>🎯 {{ user.avg_accuracy }}%</span>
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty-state">
+                No users yet 😢
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

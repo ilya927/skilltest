@@ -1,6 +1,6 @@
 import json
 import re
-
+import math
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from django.db.models import Q, Avg
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-
+from .services.throttling import SimpleThrottle
 from .models import (
     Test, TestResult, FriendRequest,
     Question, ChatMessage
@@ -143,11 +143,24 @@ class HomeView(View):
 class AIChatView(View):
     def post(self, request):
         try:
+            # 🔥 THROTTLING
+            throttle = SimpleThrottle(limit=5, window=60)
+
+            if not throttle.allow(request):
+                return JsonResponse(
+                    {"response": "⏳ Too many requests. Please slow down."},
+                    status=429
+                )
+
             data = json.loads(request.body)
             message = data.get("message", "").strip()
 
             if not message:
-                return JsonResponse({"response": "Empty message"}, status=400)
+                return JsonResponse(
+                    {"response": "Empty message"},
+                    status=400
+                )
+
 
             response = ai.chat(message)
 
@@ -158,11 +171,15 @@ class AIChatView(View):
                     response=response
                 )
 
-            return JsonResponse({"response": response})
+            return JsonResponse({
+                "response": response
+            })
 
         except Exception as e:
-            return JsonResponse({"response": str(e)}, status=500)
-
+            return JsonResponse(
+                {"response": str(e)},
+                status=500
+            )
 
 # =========================
 # AI GENERATE TEST
@@ -359,15 +376,60 @@ class FriendStatView(LoginRequiredMixin, View):
         if not is_friend and friend != request.user:
             return redirect("friends")
 
-        last_tests = TestResult.objects.filter(user=friend).order_by("-completed_at")[:5]
-        avg_score = TestResult.objects.filter(user=friend).aggregate(avg=Avg("accuracy"))["avg"] or 0
-        total_tests = TestResult.objects.filter(user=friend).count()
+        results = TestResult.objects.filter(user=friend)
+
+        last_tests = results.order_by("-completed_at")[:5]
+
+        avg_score = results.aggregate(avg=Avg("accuracy"))["avg"] or 0
+        total_tests = results.count()
+
+        # =========================
+        # 🔥 STREAK (упрощённо)
+        # =========================
+        streak = 0
+        dates = list(results.order_by("-completed_at").values_list("completed_at", flat=True))
+
+        # просто проверка активности
+        if total_tests >= 10:
+            streak = 7
+        elif total_tests >= 5:
+            streak = 3
+        else:
+            streak = total_tests
+
+        # =========================
+        # 🏅 ACHIEVEMENTS
+        # =========================
+        achievements = []
+
+        # 🥇 MASTER
+        if avg_score >= 85 and total_tests >= 5:
+            achievements.append({
+                "name": "🥇 Master Student",
+                "class": "master"
+            })
+
+        # 🔥 STREAK
+        if total_tests >= 10:
+            achievements.append({
+                "name": "🔥 On Fire",
+                "class": "streak"
+            })
+
+        # 🔵 SOLVER
+        if avg_score >= 70 and total_tests >= 3:
+            achievements.append({
+                "name": "🔵 Consistent Solver",
+                "class": "solver"
+            })
 
         return render(request, "skillplatform/friendstat.html", {
             "friend": friend,
             "last_tests": last_tests,
             "avg_score": avg_score,
             "total_tests": total_tests,
+            "streak": streak,
+            "achievements": achievements,
         })
 
 
@@ -378,18 +440,56 @@ class CompareView(View):
     def get(self, request, user_id):
         friend = get_object_or_404(User, id=user_id)
 
-        my_results = TestResult.objects.filter(user=request.user)
-        friend_results = TestResult.objects.filter(user=friend)
+        my_results = TestResult.objects.filter(user=request.user).order_by("-completed_at")
+        friend_results = TestResult.objects.filter(user=friend).order_by("-completed_at")
 
+        # 📊 AVG
         my_avg = my_results.aggregate(avg=Avg("accuracy"))["avg"] or 0
         friend_avg = friend_results.aggregate(avg=Avg("accuracy"))["avg"] or 0
 
+        # 📝 TESTS COUNT
+        my_tests = my_results.count()
+        friend_tests = friend_results.count()
+
+        # 🔥 STREAK FUNCTION
+        def calc_streak(results):
+            streak = 0
+            last_date = None
+
+            for r in results:
+                if not last_date:
+                    streak = 1
+                    last_date = r.completed_at.date()
+                    continue
+
+                diff = (last_date - r.completed_at.date()).days
+
+                if diff <= 1:
+                    streak += 1
+                    last_date = r.completed_at.date()
+                else:
+                    break
+
+            return streak
+
+        my_streak = calc_streak(my_results)
+        friend_streak = calc_streak(friend_results)
+
+        # 🏆 WINNER
         winner = "You" if my_avg > friend_avg else friend.username
 
         return render(request, "skillplatform/compare.html", {
             "friend": friend,
+
             "my_avg": my_avg,
             "friend_avg": friend_avg,
+
+            "my_tests": my_tests,
+            "friend_tests": friend_tests,
+
+            "my_streak": my_streak,
+            "friend_streak": friend_streak,
+
             "winner": winner,
         })
 
@@ -451,3 +551,42 @@ class AITestDataView(View):
             "title": test.title,
             "questions": questions
         })
+    
+
+
+class TopWorldView(TemplateView):
+    template_name = "skillplatform/leaderboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        users_data = []
+
+        for user in User.objects.all():
+
+            results = TestResult.objects.filter(user=user)
+            tests_count = results.count()
+
+            if tests_count == 0:
+                continue
+
+            # ⭐ главное — сумма всех очков
+            total_score = sum(r.score or 0 for r in results)
+
+            # 🎯 средняя точность (только для отображения)
+            avg_accuracy = results.aggregate(avg=Avg("accuracy"))["avg"] or 0
+
+            users_data.append({
+                "username": user.username,
+                "score": total_score,  # ⭐ ВАЖНО: это главный показатель
+                "tests_count": tests_count,
+                "avg_accuracy": round(avg_accuracy, 1),
+            })
+
+        # 🔥 СОРТИРОВКА ТОЛЬКО ПО SCORE
+        users_data.sort(key=lambda x: x["score"], reverse=True)
+
+        context["top_users"] = users_data[:3]
+        context["other_users"] = users_data[3:]
+
+        return context

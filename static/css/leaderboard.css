@@ -1,0 +1,123 @@
+.leaderboard-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.page-title {
+    color: white;
+    margin-bottom: 25px;
+    font-size: 26px;
+}
+
+/* ===================== */
+/* TOP 3 */
+/* ===================== */
+
+.top-three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.top-card {
+    background: #0f1b33;
+    border: 1px solid #1b2a4a;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    transition: 0.2s;
+}
+
+.top-card:hover {
+    transform: translateY(-5px);
+}
+
+.top-card .rank {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.top-card .name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.top-card .stats {
+    color: #c14dff;
+    font-weight: 600;
+}
+
+.top-card .substats {
+    color: #9fb2d9;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* highlight */
+
+.rank-1 {
+    border: 1px solid gold;
+}
+
+.rank-2 {
+    border: 1px solid silver;
+}
+
+.rank-3 {
+    border: 1px solid #cd7f32;
+}
+
+/* ===================== */
+/* REST LIST */
+/* ===================== */
+
+.leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.leaderboard-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #0f1b33;
+    border: 1px solid #1b2a4a;
+    border-radius: 10px;
+
+    padding: 12px 15px;
+
+    color: white;
+    transition: 0.2s;
+}
+
+.leaderboard-row:hover {
+    background: #162446;
+}
+
+.left {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.place {
+    color: #c14dff;
+    font-weight: 700;
+}
+
+.username {
+    font-weight: 500;
+}
+
+.right {
+    display: flex;
+    gap: 15px;
+    color: #9fb2d9;
+    font-size: 14px;
+}

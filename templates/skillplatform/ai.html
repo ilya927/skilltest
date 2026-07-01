@@ -13,17 +13,19 @@
         Learning AI Assistant
     </div>
 
-    <!-- lesson / test buttons -->
+    <!-- quick buttons -->
     <div class="quick-questions">
-        <button onclick="quickAsk('Create a math test')">Math Test</button>
-        <button onclick="quickAsk('Explain fractions')">Fractions</button>
-        <button onclick="quickAsk('Create an English test')">English Test</button>
-        <button onclick="quickAsk('Explain geometry')">Geometry</button>
-        <button onclick="quickAsk('Give me a science quiz')">Science Quiz</button>
+        <button onclick="quickAsk('Create a math test')">📊 Math Test</button>
+        <button onclick="quickAsk('Explain fractions')">➗ Fractions</button>
+        <button onclick="quickAsk('Create an English test')">📘 English Test</button>
+        <button onclick="quickAsk('Explain geometry')">📐 Geometry</button>
+        <button onclick="quickAsk('Give me a science quiz')">🔬 Science Quiz</button>
     </div>
 
+    <!-- chat -->
     <div id="chatBox" class="chat-box"></div>
 
+    <!-- input -->
     <div class="input-area">
         <input id="messageInput" type="text" placeholder="Write a lesson topic..." />
         <button id="sendBtn">Send</button>
@@ -37,14 +39,29 @@ const input = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
 
 /* =========================
-   ADD MESSAGE
+   ADD MESSAGE (MARKDOWN + MATH FIX)
 ========================= */
 function addMessage(text, type) {
     const div = document.createElement("div");
     div.classList.add("message", type);
-    div.innerText = text;
+
+    let content = String(text);
+
+    // Markdown (если подключен marked)
+    if (window.marked) {
+        content = marked.parse(content);
+        div.innerHTML = content;
+    } else {
+        div.textContent = content;
+    }
+
     chatBox.appendChild(div);
     chatBox.scrollTop = chatBox.scrollHeight;
+
+    // MathJax render (формулы)
+    if (window.MathJax) {
+        MathJax.typesetPromise([div]);
+    }
 }
 
 /* =========================
@@ -57,17 +74,22 @@ async function sendMessage(textFromButton = null) {
     addMessage(message, "user");
     input.value = "";
 
-    const res = await fetch("/ai/chat/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message })
-    });
+    try {
+        const res = await fetch("/ai/chat/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message })
+        });
 
-    const data = await res.json();
+        const data = await res.json();
 
-    addMessage(data.response || "Error", "bot");
+        addMessage(data.response || "Error from AI ❌", "bot");
+
+    } catch (err) {
+        addMessage("Network error ❌", "bot");
+    }
 }
 
 /* =========================
@@ -89,8 +111,10 @@ input.addEventListener("keydown", (e) => {
 /* =========================
    WELCOME MESSAGE
 ========================= */
-addMessage("Hello! I am your learning assistant. I can help you with lessons and quizzes.", "bot");
-
+addMessage(
+    "Hello! I am your learning assistant. I can help you with lessons and quizzes.",
+    "bot"
+);
 </script>
 
 {% endblock %}

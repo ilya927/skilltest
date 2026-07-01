@@ -69,13 +69,9 @@
 
             <h5>Results</h5>
 
-            <a href="{% url 'results' %}">
-                My Results
-            </a>
-
-            <a href="{% url 'friends' %}">
-                Friends
-            </a>
+            <a href="{% url 'results' %}">My Results</a>
+            <a href="{% url 'friends' %}">Friends</a>
+            <a href="{% url 'leaderboard' %}" class="leaderboard-link">Leaderboard</a>
 
         </div>
 
@@ -87,7 +83,18 @@
 
 </div>
 
+<!-- =========================
+     JS LIBRARIES (AI FIX)
+========================= -->
+
+<!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Markdown parser -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- Math renderer (LaTeX: $x^2$, \frac etc.) -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 </body>
 </html>

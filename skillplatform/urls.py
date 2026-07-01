@@ -43,6 +43,8 @@ from .views import (
     AIGenerateTestView,
     AIChatView,
     AITestDataView,
+
+    TopWorldView, 
 )
 
 urlpatterns = [
@@ -64,7 +66,7 @@ urlpatterns = [
     path("test/<int:pk>/", TestDetailView.as_view(), name="test_detail"),
     path("test/<int:pk>/save/", SaveResultView.as_view(), name="save_result"),
     path("results/", ResultsView.as_view(), name="results"),
-
+    path("leaderboard/", TopWorldView.as_view(), name="leaderboard"),
     # =========================
     # 👥 FRIENDS
     # =========================
