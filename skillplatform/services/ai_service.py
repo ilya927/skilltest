@@ -1,5 +1,6 @@
 import random
 import re
+import json
 import google.generativeai as genai
 from django.conf import settings
 
@@ -15,26 +16,24 @@ class AIService:
     # =========================
     def chat(self, message: str) -> str:
         try:
-            response = model.generate_content(f"""
-You are a professional AI Learning Tutor (Math, Physics, Science).
+            prompt = (
+                "You are a professional AI Learning Tutor (Math, Physics, Science).\n\n"
+                "VERY IMPORTANT RULES:\n"
+                "- Respond ONLY in clean Markdown text\n"
+                "- DO NOT use LaTeX, $, {}, or special math symbols\n"
+                "- Write math in simple words (example: x squared, a/b)\n"
+                "- Use structure:\n"
+                "### Topic\n"
+                "### Explanation\n"
+                "### Steps (numbered)\n"
+                "### Final Answer\n"
+                "- Be short, clear, educational\n\n"
+                f"User question:\n{message}"
+            )
 
-VERY IMPORTANT RULES:
-- Respond ONLY in Markdown format
-- Use clear structure:
-  ### Topic
-  ### Explanation
-  ### Steps (numbered)
-  ### Final Answer
-- Use LaTeX for math: $x^2$, $\\frac{{a}}{{b}}$
-- Be clear, short, and educational
-- Never write long paragraphs
-- Always explain step-by-step like a teacher
+            response = model.generate_content(prompt)
 
-User question:
-{message}
-""")
-
-            return response.text.strip()
+            return self._clean_text(response.text)
 
         except Exception as e:
             return f"AI Error: {str(e)}"
@@ -44,17 +43,17 @@ User question:
     # =========================
     def explain_text(self, text: str) -> str:
         try:
-            response = model.generate_content(f"""
-Explain this for a student in simple terms.
+            prompt = (
+                "Explain this for a student in simple terms.\n\n"
+                "Format:\n"
+                "### Explanation\n"
+                "### Key Points\n\n"
+                f"Text:\n{text}"
+            )
 
-Format:
-### Explanation
-### Key Points
+            response = model.generate_content(prompt)
+            return self._clean_text(response.text)
 
-Text:
-{text}
-""")
-            return response.text.strip()
         except Exception as e:
             return str(e)
 
@@ -63,72 +62,55 @@ Text:
     # =========================
     def summarize_text(self, text: str) -> str:
         try:
-            response = model.generate_content(f"""
-Summarize this text clearly.
+            prompt = (
+                "Summarize this text clearly.\n\n"
+                "Format:\n"
+                "### Summary\n\n"
+                f"Text:\n{text}"
+            )
 
-Format:
-### Summary
+            response = model.generate_content(prompt)
+            return self._clean_text(response.text)
 
-Text:
-{text}
-""")
-            return response.text.strip()
         except Exception as e:
             return str(e)
 
     # =========================
-    # KEYWORDS EXTRACTION
-    # =========================
-    def _extract_keywords(self, text):
-        words = re.findall(r"\b[a-zA-Z]{4,}\b", text.lower())
-        return list(set(words))[:8] or ["topic", "concept", "idea"]
-
-    # =========================
-    # TEST GENERATOR (AI + fallback)
+    # TEST GENERATOR
     # =========================
     def generate_test(self, text, subject="general", difficulty="medium"):
         try:
-            response = model.generate_content(f"""
-You are a test generator AI.
+            prompt = (
+                "You are a test generator AI.\n\n"
+                f"Create a {difficulty} level test for {subject}.\n\n"
+                "VERY IMPORTANT:\n"
+                "Return ONLY valid JSON in this format:\n\n"
+                "{\n"
+                '  "title": "string",\n'
+                '  "questions": [\n'
+                "    {\n"
+                '      "text": "string",\n'
+                '      "options": ["A", "B", "C", "D"],\n'
+                '      "correct_index": 0\n'
+                "    }\n"
+                "  ]\n"
+                "}\n\n"
+                "Rules:\n"
+                "- exactly 5 questions\n"
+                "- no explanations\n"
+                "- JSON only\n\n"
+                f"Topic:\n{text}"
+            )
 
-Create a {difficulty} level test for {subject}.
+            response = model.generate_content(prompt)
+            raw = self._clean_text(response.text)
 
-VERY IMPORTANT:
-Return ONLY valid JSON in this format:
-
-{{
-  "title": "...",
-  "questions": [
-    {{
-      "text": "...",
-      "options": ["A", "B", "C", "D"],
-      "correct_index": 0
-    }}
-  ]
-}}
-
-Rules:
-- 5 questions
-- clear educational questions
-- only JSON, no explanation
-
-Topic:
-{text}
-""")
-
-            raw = response.text.strip()
+            parsed = self._safe_json(raw)
+            if parsed:
+                return parsed
 
         except Exception:
-            raw = None
-
-        # fallback if AI fails
-        if not raw:
-            return self._fallback_test(text, subject, difficulty)
-
-        # try parse JSON safely
-        parsed = self._safe_json(raw)
-        if parsed:
-            return parsed
+            pass
 
         return self._fallback_test(text, subject, difficulty)
 
@@ -149,13 +131,13 @@ Topic:
         for _ in range(5):
             kw = random.choice(keywords)
 
-            correct = f"{kw} is correct according to the topic"
+            correct = f"{kw} is correct"
 
             options = [
                 correct,
-                f"Wrong explanation of {kw}",
-                f"Unrelated idea about {kw}",
-                f"Partially correct meaning of {kw}"
+                f"Wrong about {kw}",
+                f"Unrelated {kw}",
+                f"Partially correct {kw}"
             ]
 
             random.shuffle(options)
@@ -172,17 +154,40 @@ Topic:
         }
 
     # =========================
+    # KEYWORDS
+    # =========================
+    def _extract_keywords(self, text):
+        words = re.findall(r"\b[a-zA-Z]{4,}\b", text.lower())
+        return list(set(words))[:8] or ["topic", "concept", "idea"]
+
+    # =========================
     # SAFE JSON PARSER
     # =========================
     def _safe_json(self, text):
         try:
-            import json
             return json.loads(text)
         except:
-            match = re.search(r"\{.*\}", str(text), re.S)
+            match = re.search(r"\{.*\}", text, re.S)
             if match:
                 try:
                     return json.loads(match.group())
                 except:
                     return None
         return None
+
+    # =========================
+    # CLEAN OUTPUT
+    # =========================
+    def _clean_text(self, text: str) -> str:
+        if not text:
+            return ""
+
+        # убираем LaTeX и мусор
+        text = text.replace("$", "")
+        text = text.replace("{", "")
+        text = text.replace("}", "")
+
+        # убираем лишние пробелы
+        text = re.sub(r"\n{3,}", "\n\n", text)
+
+        return text.strip()
