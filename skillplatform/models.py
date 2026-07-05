@@ -2,9 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# =========================
-# 📚 TEST
-# =========================
+# TEST
 class Test(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -14,9 +12,8 @@ class Test(models.Model):
         return self.title
 
 
-# =========================
-# ❓ QUESTION
-# =========================
+
+# QUESTION
 class Question(models.Model):
     test = models.ForeignKey(
         Test,
@@ -37,9 +34,8 @@ class Question(models.Model):
         return self.text
 
 
-# =========================
-# 📊 TEST RESULT
-# =========================
+
+# TEST RESULT
 class TestResult(models.Model):
     user = models.ForeignKey(
         User,
@@ -76,9 +72,7 @@ class TestResult(models.Model):
         return f"{self.user.username} - {self.test.title} - {self.accuracy}%"
 
 
-# =========================
-# 👥 FRIEND REQUEST SYSTEM
-# =========================
+# FRIEND REQUEST SYSTEM
 class FriendRequest(models.Model):
     from_user = models.ForeignKey(
         User,
@@ -113,9 +107,8 @@ class FriendRequest(models.Model):
         return f"{self.from_user.username} → {self.to_user.username} ({self.status})"
 
 
-# =========================
-# 🧠 FRIENDS HELPER FUNCTION
-# =========================
+
+# FRIENDS HELPER FUNCTION
 def get_friends(user):
     sent = FriendRequest.objects.filter(
         from_user=user,
@@ -130,9 +123,8 @@ def get_friends(user):
     return User.objects.filter(id__in=list(sent) + list(received))
 
 
-# =========================
-# 🤖 AI GENERATION LOG
-# =========================
+
+# AI GENERATION LOG
 class AIGeneration(models.Model):
     user = models.ForeignKey(
         User,
@@ -162,9 +154,8 @@ class AIGeneration(models.Model):
         return f"AI Test ({self.subject} - {self.difficulty})"
 
 
-# =========================
-# 💬 AI CHAT MESSAGES
-# =========================
+
+# AI CHAT MESSAGES
 class ChatMessage(models.Model):
     user = models.ForeignKey(
         User,

@@ -68,10 +68,10 @@
 
 </div>
 
-<!-- scroll button -->
+
 <button id="scrollTopBtn" class="scroll-top-btn">↑</button>
 
-<!-- result modal -->
+
 <div id="resultModal" class="modal">
 
     <div class="modal-content">
@@ -101,7 +101,7 @@ let seconds = 0;
 const totalQuestions = Number("{{ questions|length }}");
 
 
-// ================= CSRF =================
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -118,7 +118,6 @@ function getCookie(name) {
 }
 
 
-// ================= OPTIONS =================
 document.querySelectorAll(".option").forEach(option => {
 
     option.addEventListener("click", function () {
@@ -165,7 +164,6 @@ document.querySelectorAll(".option").forEach(option => {
 });
 
 
-// ================= TIMER =================
 setInterval(() => {
     seconds++;
 
@@ -178,7 +176,6 @@ setInterval(() => {
 }, 1000);
 
 
-// ================= CONFETTI =================
 function launchConfetti() {
     const end = Date.now() + 2000;
 
@@ -199,8 +196,6 @@ function launchConfetti() {
     })();
 }
 
-
-// ================= SAVE RESULT =================
 function saveResult(score, total, percent, duration) {
 
     fetch(`/test/{{ test.id }}/save/`, {
@@ -226,7 +221,6 @@ function saveResult(score, total, percent, duration) {
 }
 
 
-// ================= MODAL =================
 function showResultModal() {
 
     const percent = Math.round((score / totalQuestions) * 100);
@@ -244,20 +238,17 @@ function showResultModal() {
         launchConfetti();
     }
 
-    // 🔥 SAVE TO DATABASE
     saveResult(score, totalQuestions, percent, seconds);
 
     document.getElementById("resultModal").style.display = "block";
 }
 
 
-// close modal
 document.getElementById("closeModal").onclick = function () {
     document.getElementById("resultModal").style.display = "none";
 };
 
 
-// click outside
 window.onclick = function(event) {
     const modal = document.getElementById("resultModal");
     if (event.target === modal) {
@@ -266,7 +257,6 @@ window.onclick = function(event) {
 };
 
 
-// scroll button
 const scrollBtn = document.getElementById("scrollTopBtn");
 
 scrollBtn.addEventListener("click", () => {

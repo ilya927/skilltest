@@ -4,22 +4,17 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# =========================
-# ENV LOAD
-# =========================
+
 env_path = BASE_DIR / ".env"
 load_dotenv(dotenv_path=env_path)
 
-# =========================
-# SECURITY
-# =========================
+
 SECRET_KEY = 'django-insecure-vp4rsbc&p(o_wuut$o2ih*%)17ae&e&a4k^59i3xilkplckp%'
 DEBUG = True
 ALLOWED_HOSTS = []
 
-# =========================
-# APPS
-# =========================
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,9 +27,7 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
-# =========================
-# MIDDLEWARE
-# =========================
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -47,9 +40,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'skilltest.urls'
 
-# =========================
-# TEMPLATES
-# =========================
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -67,9 +58,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'skilltest.wsgi.application'
 
-# =========================
-# DATABASE
-# =========================
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -77,9 +66,7 @@ DATABASES = {
     }
 }
 
-# =========================
-# PASSWORD VALIDATION
-# =========================
+
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -87,35 +74,25 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# =========================
-# INTERNATIONALIZATION
-# =========================
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# =========================
-# STATIC
-# =========================
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# =========================
-# LOGIN
-# =========================
+
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = '/'
 
-# =========================
-# DEFAULT AUTO FIELD
-# =========================
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# =========================
-# GEMINI AI
-# =========================
+
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 if not GEMINI_API_KEY:

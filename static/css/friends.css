@@ -10,9 +10,6 @@
     font-size: 26px;
 }
 
-/* ===================== */
-/* SEARCH */
-/* ===================== */
 
 .search-wrapper {
     position: relative;
@@ -53,9 +50,7 @@
     transform: scale(1.05);
 }
 
-/* ===================== */
-/* SEARCH RESULTS */
-/* ===================== */
+
 
 .search-results {
     position: absolute;
@@ -115,9 +110,7 @@
     background: #2f8fff;
 }
 
-/* ===================== */
-/* TITLES */
-/* ===================== */
+
 
 .section-title {
     color: white;
@@ -126,9 +119,6 @@
     font-size: 20px;
 }
 
-/* ===================== */
-/* REQUESTS */
-/* ===================== */
 
 .requests-list {
     display: flex;
@@ -189,9 +179,6 @@
     transform: scale(1.05);
 }
 
-/* ===================== */
-/* FRIENDS */
-/* ===================== */
 
 .friends-list {
     display: grid;
@@ -228,18 +215,13 @@
     background: #162446;
 }
 
-/* ===================== */
-/* EMPTY */
-/* ===================== */
+
 
 .empty {
     color: #9fb2d9;
     margin-top: 10px;
 }
 
-/* ===================== */
-/* TOAST */
-/* ===================== */
 
 .toast {
     position: fixed;

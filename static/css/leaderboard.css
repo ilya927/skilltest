@@ -10,10 +10,6 @@
     font-size: 26px;
 }
 
-/* ===================== */
-/* TOP 3 */
-/* ===================== */
-
 .top-three {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -57,7 +53,6 @@
     margin-top: 5px;
 }
 
-/* highlight */
 
 .rank-1 {
     border: 1px solid gold;
@@ -71,9 +66,6 @@
     border: 1px solid #cd7f32;
 }
 
-/* ===================== */
-/* REST LIST */
-/* ===================== */
 
 .leaderboard-list {
     display: flex;

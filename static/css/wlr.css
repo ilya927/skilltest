@@ -6,9 +6,8 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* ====== FLOATING DOT BACKGROUND ====== */
 
-/* слой с точками */
+
 body::before {
     content: "";
     position: absolute;
@@ -29,7 +28,7 @@ body::before {
     z-index: 0;
 }
 
-/* мягкое свечение */
+
 body::after {
     content: "";
     position: absolute;
@@ -47,7 +46,7 @@ body::after {
     z-index: 0;
 }
 
-/* анимация движения точек */
+
 @keyframes floatDots {
     0% {
         transform: translate(0, 0);
@@ -57,7 +56,6 @@ body::after {
     }
 }
 
-/* ====== LAYOUT ====== */
 
 .navbar {
     background: #0f1b33 !important;
@@ -118,7 +116,7 @@ body::after {
     color: white;
 }
 
-/* ====== WELCOME PAGE FIX ====== */
+
 
 .container {
     position: relative;

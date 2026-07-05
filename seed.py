@@ -9,22 +9,22 @@ django.setup()
 from django.contrib.auth.models import User
 from skillplatform.models import Test, TestResult
 
-users_data = [
-    ("john_weak", "weak"),
-    ("maria_slow", "weak"),
-    ("sophia_easy", "weak"),
-    ("alex_student", "normal"),
-    ("david_brown", "normal"),
-    ("emma_smart", "smart"),
-    ("liam_pro", "smart"),
-    ("noah_brain", "smart"),
-    ("olivia_hardworker", "good"),
-    ("michael_improving", "good"),
+new_users = [
+    ("jake_wilson", "weak"),
+    ("lucas_gray", "weak"),
+    ("nina_cooper", "normal"),
+    ("ethan_clark", "normal"),
+    ("sara_jones", "smart"),
+    ("ben_smith", "smart"),
+    ("lily_adams", "good"),
+    ("ryan_moore", "good"),
+    ("mia_taylor", "normal"),
+    ("dylan_scott", "smart"),
 ]
 
 tests = list(Test.objects.all())
 
-for username, level in users_data:
+for username, level in new_users:
     user, created = User.objects.get_or_create(username=username)
 
     if created:
@@ -45,7 +45,7 @@ for username, level in users_data:
         test_count = random.randint(10, 15)
         min_p, max_p = 70, 85
 
-    else:  # good (strong but not perfect)
+    else:  # good
         test_count = random.randint(12, 18)
         min_p, max_p = 75, 90
 
@@ -54,8 +54,19 @@ for username, level in users_data:
 
         total = test.questions.count()
 
-        score = max(1, int(total * random.uniform(min_p / 100, max_p / 100)))
-        accuracy = (score / total) * 100 if total > 0 else 0
+        base = random.uniform(min_p, max_p)
+        noise = random.uniform(-6, 6)
+
+        final_accuracy = max(40, min(95, base + noise + random.random()))
+
+        score = max(1, int(total * final_accuracy / 100))
+
+        accuracy = round(
+            (score / total) * 100 + random.uniform(-0.9, 0.9),
+            2
+        )
+
+        accuracy = max(40, min(95, accuracy))
 
         TestResult.objects.create(
             user=user,
@@ -67,4 +78,4 @@ for username, level in users_data:
             session_key=f"{username}_{i}_{int(time.time())}"
         )
 
-print("10 realistic users created (no perfect scores)")
+print("DONE: 10 new users created with realistic unique stats")

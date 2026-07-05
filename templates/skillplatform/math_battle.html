@@ -9,7 +9,6 @@
 
 {% block content %}
 
-<!-- SCREEN FLASH -->
 <div class="screen-flash" id="screenFlash"></div>
 
 <div class="battle-wrapper">
@@ -78,7 +77,7 @@ updateHP();
 generateQuestion();
 startTimer();
 
-/* ================= QUESTION ================= */
+
 
 function generateQuestion() {
 
@@ -101,7 +100,6 @@ function generateQuestion() {
     document.getElementById("answer").value = "";
 }
 
-/* ================= ANSWER ================= */
 
 function submitAnswer() {
 
@@ -129,7 +127,7 @@ function submitAnswer() {
         playerHP -= 15;
 
         shake("playerSide");
-        screenFlash(); // 🔴 ONLY PLAYER DAMAGE
+        screenFlash(); 
     }
 
     document.getElementById("comboText").innerText =
@@ -146,7 +144,7 @@ function submitAnswer() {
     }
 }
 
-/* ================= TIMER ================= */
+
 
 function startTimer() {
 
@@ -187,7 +185,7 @@ function resetTimer() {
     document.getElementById("timer").innerText = timeLeft;
 }
 
-/* ================= HP ================= */
+
 
 function clampHP() {
     bossHP = Math.max(0, bossHP);
@@ -199,7 +197,7 @@ function updateHP() {
     document.getElementById("playerHp").style.width = playerHP + "%";
 }
 
-/* ================= PHASE ================= */
+
 
 function checkPhase() {
 
@@ -212,7 +210,6 @@ function checkPhase() {
     }
 }
 
-/* ================= GAME OVER ================= */
 
 function checkGameOver() {
     if (bossHP <= 0) endGame("🏆 YOU WIN", "win-text");
@@ -232,7 +229,7 @@ function endGame(text, cls) {
     document.querySelector(".attack-btn").style.display = "none";
 }
 
-/* ================= EFFECTS ================= */
+
 
 function shake(id) {
     const el = document.getElementById(id);

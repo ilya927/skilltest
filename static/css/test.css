@@ -1,4 +1,4 @@
-/* ================= MAIN CONTAINER ================= */
+
 
 .test-container {
     width: 100%;
@@ -18,7 +18,7 @@
     margin-bottom: 20px;
 }
 
-/* ================= STATS BAR ================= */
+
 
 .stats-row {
     display: flex;
@@ -38,7 +38,6 @@
     white-space: nowrap;
 }
 
-/* ================= PROGRESS BAR ================= */
 
 .progress-wrapper {
     flex: 1;
@@ -61,7 +60,6 @@
     transition: width 0.3s ease;
 }
 
-/* ================= QUESTION CARD ================= */
 
 .question-card {
     background: #0f1b33;
@@ -83,7 +81,7 @@
     gap: 10px;
 }
 
-/* ================= OPTION ================= */
+
 
 .option {
     padding: 14px;
@@ -120,7 +118,7 @@
     animation: shake 0.3s ease;
 }
 
-/* ================= ANIMATIONS ================= */
+
 
 @keyframes pop {
     0% { transform: scale(1); }
@@ -135,7 +133,6 @@
     100% { transform: translateX(0); }
 }
 
-/* ================= SCROLL BUTTON ================= */
 
 .scroll-top-btn {
     position: fixed;
@@ -176,7 +173,7 @@
     transform: translateY(-50%) scale(0.95);
 }
 
-/* ================= MODAL ================= */
+
 
 .modal {
     display: none;

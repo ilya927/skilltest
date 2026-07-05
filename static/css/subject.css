@@ -35,9 +35,7 @@
     color: #cbd7f3;
 }
 
-/* =========================
-   BATTLE BUTTON
-========================= */
+
 
 .battle-btn {
     background: #ff4d4d;
@@ -57,9 +55,7 @@
     box-shadow: 0 0 20px rgba(255,77,77,0.3);
 }
 
-/* =========================
-   SECTIONS
-========================= */
+
 
 .subject-section {
     margin-bottom: 30px;
@@ -70,9 +66,7 @@
     margin-bottom: 15px;
 }
 
-/* =========================
-   GRID
-========================= */
+
 
 .subject-grid {
     display: grid;
@@ -92,9 +86,7 @@
     .subject-grid { grid-template-columns: 1fr; }
 }
 
-/* =========================
-   CARDS
-========================= */
+
 
 .subject-card {
     background: #0f1b33;
@@ -125,9 +117,6 @@
     color: #cbd7f3;
 }
 
-/* =========================
-   FORMULA BOX
-========================= */
 
 .formula {
     color: #1DB954;
@@ -139,9 +128,6 @@
     font-family: Consolas, monospace;
 }
 
-/* =========================
-   OLD BOX (compat)
-========================= */
 
 .box {
     background: #132242;
@@ -158,9 +144,7 @@
     border: 1px solid rgba(255,255,255,0.04);
 }
 
-/* =========================
-   LESSON
-========================= */
+
 
 .lesson {
     background: #0f1b33;
@@ -182,9 +166,7 @@
     box-shadow: 0 0 15px rgba(29,185,84,0.08);
 }
 
-/* =========================
-   STATS
-========================= */
+
 
 .stats-grid {
     display: grid;

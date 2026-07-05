@@ -1,6 +1,4 @@
-/* =========================
-   GLOBAL BACKGROUND
-========================= */
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -8,9 +6,6 @@ body {
     background: radial-gradient(circle at top, #1a1f3a, #05070f);
 }
 
-/* =========================
-   WRAPPER
-========================= */
 .ai-wrapper {
     max-width: 850px;
     margin: 30px auto;
@@ -27,9 +22,7 @@ body {
     padding: 16px;
 }
 
-/* =========================
-   HEADER
-========================= */
+
 .ai-header {
     font-size: 20px;
     font-weight: 600;
@@ -43,9 +36,7 @@ body {
     margin-bottom: 10px;
 }
 
-/* =========================
-   CHAT BOX
-========================= */
+
 .chat-box {
     flex: 1;
     overflow-y: auto;
@@ -63,9 +54,7 @@ body {
     gap: 12px;
 }
 
-/* =========================
-   MESSAGES
-========================= */
+
 .message {
     max-width: 75%;
     padding: 12px 14px;
@@ -97,9 +86,7 @@ body {
     border-bottom-left-radius: 4px;
 }
 
-/* =========================
-   QUICK LESSON BUTTONS
-========================= */
+
 .quick-questions {
     display: flex;
     gap: 8px;
@@ -125,9 +112,7 @@ body {
     transform: scale(1.05);
 }
 
-/* =========================
-   INPUT AREA
-========================= */
+
 .input-area {
     display: flex;
     gap: 10px;
@@ -178,9 +163,7 @@ body {
     transform: scale(0.95);
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
+
 @keyframes fadeIn {
     from {
         opacity: 0;

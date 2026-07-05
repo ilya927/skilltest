@@ -5,7 +5,7 @@
     color: white;
 }
 
-/* HEADER */
+
 
 .friend-header {
     display: flex;
@@ -129,32 +129,6 @@
     padding: 20px;
 }
 
-/* MOBILE */
-
-@media (max-width: 768px) {
-    .friend-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .friend-stats {
-        width: 100%;
-    }
-
-    .stat-box {
-        flex: 1;
-    }
-
-    .result-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .result-right {
-        text-align: left;
-    }
-}
 
 /* =========================
    ACHIEVEMENTS BASE
@@ -177,9 +151,6 @@
     overflow: hidden;
 }
 
-/* =========================
-   GOLD - MASTER STUDENT
-========================= */
 
 .achievement.master {
     position: relative;
@@ -216,9 +187,7 @@
     100% { background-position: 300% 50%; }
 }
 
-/* =========================
-   FIRE - STREAK
-========================= */
+
 
 .achievement.streak {
     position: relative;
@@ -256,9 +225,7 @@
     100% { background-position: 100% 50%; }
 }
 
-/* =========================
-   BLUE - SOLVER
-========================= */
+
 
 .achievement.solver {
     position: relative;

@@ -19,15 +19,15 @@ from .models import (
 from .services.ai_service import AIService
 
 
-# =========================
+
 # AI INIT
-# =========================
+
 ai = AIService()
 
 
-# =========================
+
 # SAFE JSON
-# =========================
+
 def safe_json(text: str):
     try:
         return json.loads(text)
@@ -41,9 +41,9 @@ def safe_json(text: str):
     return None
 
 
-# =========================
+
 # SUBJECT PAGES
-# =========================
+
 class MathPageView(TemplateView):
     template_name = "skillplatform/math.html"
 
@@ -92,32 +92,32 @@ class HistoryBattleView(TemplateView):
     template_name = "skillplatform/history_battle.html"
 
 
-# =========================
+
 # AI PAGE
-# =========================
+
 class AIPageView(TemplateView):
     template_name = "skillplatform/ai.html"
 
 
-# =========================
+
 # WELCOME
-# =========================
+
 class WelcomeView(TemplateView):
     template_name = "skillplatform/welcome.html"
 
 
-# =========================
+
 # GUEST LOGIN
-# =========================
+
 class GuestLoginView(View):
     def get(self, request):
         request.session["guest"] = True
         return redirect("home")
 
 
-# =========================
+
 # HOME
-# =========================
+
 class HomeView(View):
     def get(self, request):
         tests = Test.objects.filter(is_ai_generated=False)
@@ -136,19 +136,18 @@ class HomeView(View):
         })
 
 
-# =========================
+
 # AI CHAT
-# =========================
+
 @method_decorator(csrf_exempt, name="dispatch")
 class AIChatView(View):
     def post(self, request):
         try:
-            # 🔥 THROTTLING
             throttle = SimpleThrottle(limit=5, window=60)
 
             if not throttle.allow(request):
                 return JsonResponse(
-                    {"response": "⏳ Too many requests. Please slow down."},
+                    {"response": " Too many requests. Please slow down."},
                     status=429
                 )
 
@@ -181,9 +180,9 @@ class AIChatView(View):
                 status=500
             )
 
-# =========================
+
 # AI GENERATE TEST
-# =========================
+
 @method_decorator(csrf_exempt, name="dispatch")
 class AIGenerateTestView(View):
     def post(self, request):
@@ -243,9 +242,8 @@ class AIGenerateTestView(View):
             return JsonResponse({"error": str(e)}, status=500)
 
 
-# =========================
+
 # TEST DETAIL
-# =========================
 class TestDetailView(LoginRequiredMixin, DetailView):
     model = Test
     template_name = "skillplatform/test_detail.html"
@@ -257,9 +255,8 @@ class TestDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-# =========================
+
 # SAVE RESULT
-# =========================
 class SaveResultView(LoginRequiredMixin, View):
     def post(self, request, pk):
         try:
@@ -282,18 +279,16 @@ class SaveResultView(LoginRequiredMixin, View):
             return JsonResponse({"error": str(e)}, status=500)
 
 
-# =========================
+
 # RESULTS
-# =========================
 class ResultsView(LoginRequiredMixin, View):
     def get(self, request):
         results = TestResult.objects.filter(user=request.user)
         return render(request, "skillplatform/results.html", {"results": results})
 
 
-# =========================
-# FRIENDS (FULL)
-# =========================
+
+# FRIENDS
 class FriendsView(LoginRequiredMixin, View):
     def get(self, request):
         query = request.GET.get("q", "").strip()
@@ -361,9 +356,8 @@ class RejectFriendRequestView(LoginRequiredMixin, View):
         return redirect("friends")
 
 
-# =========================
+
 # FRIEND STATS
-# =========================
 class FriendStatView(LoginRequiredMixin, View):
     def get(self, request, user_id):
         friend = get_object_or_404(User, id=user_id)
@@ -383,9 +377,6 @@ class FriendStatView(LoginRequiredMixin, View):
         avg_score = results.aggregate(avg=Avg("accuracy"))["avg"] or 0
         total_tests = results.count()
 
-        # =========================
-        # 🔥 STREAK (упрощённо)
-        # =========================
         streak = 0
         dates = list(results.order_by("-completed_at").values_list("completed_at", flat=True))
 
@@ -396,27 +387,21 @@ class FriendStatView(LoginRequiredMixin, View):
             streak = 3
         else:
             streak = total_tests
-
-        # =========================
-        # 🏅 ACHIEVEMENTS
-        # =========================
+        
         achievements = []
 
-        # 🥇 MASTER
         if avg_score >= 85 and total_tests >= 5:
             achievements.append({
                 "name": "🥇 Master Student",
                 "class": "master"
             })
 
-        # 🔥 STREAK
         if total_tests >= 10:
             achievements.append({
                 "name": "🔥 On Fire",
                 "class": "streak"
             })
 
-        # 🔵 SOLVER
         if avg_score >= 70 and total_tests >= 3:
             achievements.append({
                 "name": "🔵 Consistent Solver",
@@ -433,9 +418,7 @@ class FriendStatView(LoginRequiredMixin, View):
         })
 
 
-# =========================
 # COMPARE
-# =========================
 class CompareView(View):
     def get(self, request, user_id):
         friend = get_object_or_404(User, id=user_id)
@@ -443,15 +426,15 @@ class CompareView(View):
         my_results = TestResult.objects.filter(user=request.user).order_by("-completed_at")
         friend_results = TestResult.objects.filter(user=friend).order_by("-completed_at")
 
-        # 📊 AVG
+        # AVG
         my_avg = my_results.aggregate(avg=Avg("accuracy"))["avg"] or 0
         friend_avg = friend_results.aggregate(avg=Avg("accuracy"))["avg"] or 0
 
-        # 📝 TESTS COUNT
+        # TESTS COUNT
         my_tests = my_results.count()
         friend_tests = friend_results.count()
 
-        # 🔥 STREAK FUNCTION
+        # STREAK FUNCTION
         def calc_streak(results):
             streak = 0
             last_date = None
@@ -475,7 +458,7 @@ class CompareView(View):
         my_streak = calc_streak(my_results)
         friend_streak = calc_streak(friend_results)
 
-        # 🏆 WINNER
+        # WINNER
         winner = "You" if my_avg > friend_avg else friend.username
 
         return render(request, "skillplatform/compare.html", {
@@ -494,9 +477,8 @@ class CompareView(View):
         })
 
 
-# =========================
+
 # AUTH
-# =========================
 class RegisterView(View):
     def get(self, request):
         return render(request, "skillplatform/register.html")
@@ -533,9 +515,8 @@ class LogoutView(View):
         return redirect("welcome")
 
 
-# =========================
-# AITEST DATA (FIX FOR URL ERROR)
-# =========================
+
+# AITEST DATA 
 class AITestDataView(View):
     def get(self, request, test_id):
         test = get_object_or_404(Test, id=test_id)
@@ -570,20 +551,17 @@ class TopWorldView(TemplateView):
             if tests_count == 0:
                 continue
 
-            # ⭐ главное — сумма всех очков
             total_score = sum(r.score or 0 for r in results)
 
-            # 🎯 средняя точность (только для отображения)
             avg_accuracy = results.aggregate(avg=Avg("accuracy"))["avg"] or 0
 
             users_data.append({
                 "username": user.username,
-                "score": total_score,  # ⭐ ВАЖНО: это главный показатель
+                "score": total_score,
                 "tests_count": tests_count,
                 "avg_accuracy": round(avg_accuracy, 1),
             })
 
-        # 🔥 СОРТИРОВКА ТОЛЬКО ПО SCORE
         users_data.sort(key=lambda x: x["score"], reverse=True)
 
         context["top_users"] = users_data[:3]

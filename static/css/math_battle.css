@@ -7,9 +7,7 @@ body {
     overflow-x: hidden;
 }
 
-/* =========================
-   BASE DARK OVERLAY (СТАБИЛЬНЫЙ СЛОЙ)
-========================= */
+
 
 body::after {
     content: "";
@@ -20,9 +18,7 @@ body::after {
     pointer-events: none;
 }
 
-/* =========================
-   RAGE MODE (ФИОЛЕТОВАЯ АУРА)
-========================= */
+
 
 body.rage-mode::before {
     content: "";
@@ -46,9 +42,7 @@ body.rage-mode::before {
     100% { opacity: 0.25; }
 }
 
-/* =========================
-   WRAPPER (ВАЖНО: над слоями)
-========================= */
+
 
 .battle-wrapper {
     padding: 20px;
@@ -62,9 +56,7 @@ body.rage-mode::before {
     to { opacity: 1; transform: scale(1); }
 }
 
-/* =========================
-   HUD (НЕ ТРОГАЕМ)
-========================= */
+
 
 .hud {
     display: flex;
@@ -84,9 +76,7 @@ body.rage-mode::before {
     letter-spacing: 1px;
 }
 
-/* =========================
-   HP BAR (НЕ ЛОМАЕМ)
-========================= */
+
 
 .hp-bar {
     width: 100%;
@@ -106,9 +96,7 @@ body.rage-mode::before {
 .player { background: #1DB954; }
 .boss { background: #ff4d4d; }
 
-/* =========================
-   TIMER (3 СЕКУНДЫ — КРАСНЫЙ + МИГАНИЕ)
-========================= */
+
 
 .timer {
     color: #1DB954;
@@ -129,9 +117,6 @@ body.rage-mode::before {
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* =========================
-   ARENA
-========================= */
 
 .arena {
     display: flex;
@@ -157,10 +142,6 @@ body.rage-mode::before {
     100% { transform: translateY(0); }
 }
 
-/* =========================
-   CENTER UI
-========================= */
-
 .center-ui {
     width: 40%;
     text-align: center;
@@ -179,9 +160,6 @@ body.rage-mode::before {
     min-height: 20px;
 }
 
-/* =========================
-   INPUT
-========================= */
 
 .answer {
     width: 75%;
@@ -193,9 +171,6 @@ body.rage-mode::before {
     text-align: center;
 }
 
-/* =========================
-   BUTTON
-========================= */
 
 .attack-btn {
     margin-top: 15px;
@@ -207,9 +182,7 @@ body.rage-mode::before {
     font-weight: bold;
 }
 
-/* =========================
-   SHAKE (ПЕРСОНАЖИ)
-========================= */
+
 
 @keyframes shake {
     0% { transform: translate(0); }
@@ -223,9 +196,7 @@ body.rage-mode::before {
     animation: shake 0.3s ease;
 }
 
-/* =========================
-   DAMAGE FLASH (ТОЛЬКО ИГРОК)
-========================= */
+
 
 .damage-flash {
     position: fixed;
@@ -243,9 +214,7 @@ body.rage-mode::before {
     100% { opacity: 0; }
 }
 
-/* =========================
-   RAGE VISUAL BOOST (ДОБАВКА)
-========================= */
+
 
 body.rage-mode {
     box-shadow: inset 0 0 120px rgba(160, 0, 255, 0.15);

@@ -3,21 +3,19 @@ background: #051120;
 margin: 0;
 }
 
-/* NAVBAR */
 
 .navbar {
 background: #0f1b33 !important;
 border-bottom: 1px solid #1b2a4a;
 }
 
-/* LAYOUT */
+
 
 .layout {
 display: flex;
 min-height: calc(100vh - 60px);
 }
 
-/* SIDEBAR */
 
 .sidebar {
 width: 240px;
@@ -47,7 +45,7 @@ background: #18284a;
 color: #4da3ff;
 }
 
-/* THIN LINE */
+
 
 .sidebar-separator {
 border: none;
@@ -55,7 +53,6 @@ border-top: 1px solid #1b2a4a;
 margin: 25px 0;
 }
 
-/* CONTENT */
 
 .content {
 flex: 1;
@@ -63,7 +60,7 @@ min-width: 0;
 padding: 30px;
 }
 
-/* PAGE TITLE */
+
 
 .page-title {
 margin-bottom: 25px;
