@@ -1,11 +1,11 @@
 admin:     name - user 
-           password - 123123
+           password - 123123,
 all users  name - "name"
-            password - "name" + "123"
+            password - "name" + "123".
             example:  name-genius, password- genius123
 
 testusers:
-    testuser
+    testuser/
     genius 
     
 when you are a testuser click in friends page on genius to see the ideal profile
