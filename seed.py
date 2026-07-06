@@ -42,7 +42,7 @@ for username, level in new_users:
         min_p, max_p = 60, 75
 
     elif level == "smart":
-        test_count = random.randint(10, 15)
+        test_count = random.randint(11, 15)
         min_p, max_p = 70, 85
 
     else:  # good
