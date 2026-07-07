@@ -1,50 +1,84 @@
-admin:     name - user 
-           password - 123123,
-all users  name - "name"
-            password - "name" + "123".
-            example:  name-genius, password- genius123
+SkillTest – საგანმანათლებლო ტესტირების პლატფორმა
+SkillTest არის ინოვაციური ვებ-პლატფორმა, რომელიც მომხმარებლებს სთავაზობს სხვადასხვა სასკოლო საგნის ტესტებს, პროგრესის თრექინგს, გეიმიფიკაციასა და ინტეგრირებულ AI ასისტენტს.
 
-testusers:
-    testuser/
-    genius 
-    
-when you are a testuser click in friends page on genius to see the ideal profile
+გამოყენებული ტექნოლოგიები
+Backend Framework: Python / Django
 
-Technologies used:
-• Python
-• Django (backend framework)
-• HTML5
-• CSS3
-• Bootstrap
-• JavaScript
-• SQLite (მონაცემთა ბაზა)
-• Gemini AI API (გადახდილი ვერსია, შიდა AI ასისტენტისთვის)
-• Git / GitHub (ვერსიების კონტროლი)
-• REST API (AI-სთან და სისტემის ლოგიკასთან კომუნიკაცია)
-• dotenv (.env ფაილი საიდუმლო გასაღებების შესანახად)
+Frontend: HTML5 / CSS3 / Bootstrap / JavaScript
 
-A paid Gemini AI API was integrated to power the website's built-in AI assistant.
+Database: SQLite (მონაცემთა ბაზა)
 
+AI Integration: Gemini AI API (ფასიანი ვერსია, შიდა ასისტენტისთვის)
 
-Home – Main page with featured subjects, quick navigation, and platform overview.
-Login – Allows users to sign in to their account.
-Register – Allows new users to create an account.
-Profile – Displays user information, statistics, achievements, and completed tests.
-Leaderboard – Shows the ranking of users based on their scores.
-Friends – Allows users to add friends and compare statistics.
-Search – Enables users to search for subjects, tests, and other users.
-AI Assistant – Built-in AI assistant powered by the paid Gemini AI API for answering educational questions.
-Battle with Boss – Interactive mathematics game where players solve problems to defeat the boss. 
-Compare page - compares friends with each other
+Version Control: Git / GitHub
 
-Physics – Physics tests for Grades 10–12.
-Chemistry – Chemistry tests for Grades 10–12.
-Biology – Biology tests for Grades 10–12.
-History – History tests for Grades 10–12.
-English – English tests for Grades 10–12.
-Mathematics – Mathematics tests for Grades 10–12.
+API Architecture: REST API (კომუნიკაცია AI-სთან და სისტემის ლოგიკასთან)
 
+Security: python-dotenv (.env ფაილი საიდუმლო გასაღებების დასამალად)
 
-Test Page – Displays questions for the selected test and records user answers.
-Results – Shows the user's score, percentage, and correct/incorrect answers after completing a test.
-Admin Panel – Administrative page for managing users, tests, questions, and platform content.
+პროექტის ცოცხალი დემო (Live Demo) & AI უსაფრთხოება
+მნიშვნელოვანი უსაფრთხოების ინფორმაცია:
+Gemini AI-ის ფასიანი API გასაღების (API Key) უსაფრთხოების მიზნით, ის არ არის ატვირთული საჯარო GitHub რეპოზიტორში.
+
+იმისათვის, რომ საიტმა სრულყოფილად იმუშაოს ხელოვნურ ინტელექტთან ერთად (ტესტების გენერაცია, ჩატი), პროექტი ატვირთულია სერვერზე, სადაც გასაღები დაცულია.
+
+გადადით ბმულზე საიტის სრული ფუნქციონალის სანახავად: https://skilltest-jii5.onrender.com
+
+სატესტო ექაუნთები (Test Credentials)
+პლატფორმის შესაძლებლობების სწრაფად შესამოწმებლად შეგიძლიათ გამოიყენოთ შემდეგი მონაცემები:
+
+ადმინისტრატორი (Admin)
+Username: user
+
+Password: 123123
+
+მომხმარებლები (Users)
+საიტზე ყველა მომხმარებლის პაროლის ლოგიკაა: სახელი + 123
+
+Username: genius | Password: genius123
+
+Username: testuser | Password: genius
+
+რჩევა შემოწმებისთვის:
+შედით testuser ექაუნთით, გადადით მეგობრების (Friends) გვერდზე და დააკლიკეთ მომხმარებელზე genius, რათა იხილოთ იდეალურად შევსებული პროფილის მაგალითი.
+
+პლატფორმის სტრუქტურა და გვერდები
+ძირითადი გვერდები:
+Home – მთავარი გვერდი, საგნების მიმოხილვა და ნავიგაცია.
+
+Login / Register – ავტორიზაცია და ახალი მომხმარებლის რეგისტრაცია.
+
+Profile – მომხმარებლის სტატისტიკა, მიღწევები (Achievements) და გავლილი ტესტები.
+
+Leaderboard – რეიტინგის გვერდი ქულების მიხედვით.
+
+Friends – მეგობრების დამატება და სტატისტიკის შედარება.
+
+Compare page – მეგობრების შედეგების ერთმანეთთან დეტალური შედარება.
+
+Search – საგნების, ტესტებისა და მომხმარებლების ძებნა.
+
+ინოვაციური მოდულები:
+AI Assistant – ჩაშენებული ასისტენტი (Gemini AI API-ზე), რომელიც პასუხობს ნებისმიერ საგანმანათლებლო კითხვას.
+
+Battle with Boss – ინტერაქტიული მათემატიკური თამაში, სადაც ბოსის დასამარცხებლად საჭიროა მაგალითების სწრაფად ამოხსნა.
+
+ხელმისაწვდომი საგნები (10–12 კლასები):
+ფიზიკა (Physics)
+
+ქიმია (Chemistry)
+
+ბიოლოგია (Biology)
+
+ისტორია (History)
+
+ინგლისური (English)
+
+მათემატიკა (Mathematics)
+
+ფუნქციონალური გვერდები:
+Test Page – ტესტის გავლის ინტერფეისი.
+
+Results – ტესტის დასრულების შემდეგ პროცენტების, ქულებისა და შეცდომების ჩვენება.
+
+Admin Panel – ადმინისტრირების პანელი ტესტების, კითხვებისა და მომხმარებლების სამართავად.
