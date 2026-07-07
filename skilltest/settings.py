@@ -14,6 +14,11 @@ SECRET_KEY = 'django-insecure-vp4rsbc&p(o_wuut$o2ih*%)17ae&e&a4k^59i3xilkplckp%'
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 
+# Доверенные адреса для защиты от CSRF атак на Render
+CSRF_TRUSTED_ORIGINS = [
+    'https://skilltest-jii5.onrender.com',
+]
+
 # Приложения проекта
 INSTALLED_APPS = [
     'django.contrib.admin',
