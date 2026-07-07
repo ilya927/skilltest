@@ -1,12 +1,11 @@
 import random
 import re
 import json
-import google.generativeai as genai
+from google import genai  # Перешли на новый официальный пакет
 from django.conf import settings
 
-genai.configure(api_key=settings.GEMINI_API_KEY)
-
-model = genai.GenerativeModel("gemini-2.5-flash")
+# Инициализируем клиент. Он автоматически подхватит настройки или ключ
+client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 
 class AIService:
@@ -42,7 +41,11 @@ class AIService:
                 f"Student question:\n{message}"
             )
 
-            response = model.generate_content(prompt)
+            # Новый синтаксис вызова модели через client
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
 
             return self._clean_text(response.text)
 
@@ -61,7 +64,10 @@ class AIService:
                 f"Text:\n{text}"
             )
 
-            response = model.generate_content(prompt)
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
             return self._clean_text(response.text)
 
         except Exception as e:
@@ -78,7 +84,10 @@ class AIService:
                 f"Text:\n{text}"
             )
 
-            response = model.generate_content(prompt)
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
             return self._clean_text(response.text)
 
         except Exception as e:
@@ -111,7 +120,10 @@ class AIService:
                 f"Topic:\n{text}"
             )
 
-            response = model.generate_content(prompt)
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
             raw = self._clean_text(response.text)
 
             parsed = self._safe_json(raw)
